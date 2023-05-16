@@ -18,7 +18,7 @@ nav {
 .nav-container {
   height: 8vh;
   display: flex;
-	align-items: center;
+  align-items: center;
   width: 80%;
 }
 
@@ -44,14 +44,17 @@ nav ul li a {
 }
 
 .kanan li a {
-  padding: 8px 20px;
+  font-size: 0.9rem;
+  padding: 5px 15px;
   background-color: black;
   border-radius: 8px;
   color: white;
 }
 
 .kanan li a:hover {
-	background-color: transparent;
+  background-color: white;
+  border: 1px solid black;
+  color: black;
 }
 
 li a:hover {
