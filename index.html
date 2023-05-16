@@ -4,102 +4,67 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>task-1</title>
-    <style>
-      * {
-        font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
-      }
-    </style>
+    <title>Malfazakki-Profile</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div
-      style="
-        width: 90%;
-        margin: 70px auto;
-        border: 1px solid white;
-        box-shadow: 0 0 15px #cecece;
-        box-sizing: border-box;
-      "
-    >
-      <div style="width: 60%; margin: 80px auto">
-        <h2 style="font-weight: 700">Hi Welcome to my hut.</h2>
-        <p style="text-align: justify; margin-bottom: 30px; font-weight: 500">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit
-          quo, necessitatibus, iure placeat quidem error veritatis corrupti
-          laudantium labore consequuntur officia veniam sequi consequatur aut
-          deserunt! Vel consectetur tenetur minus! Beatae sunt vero nesciunt eos
-          iste at! Dolor reiciendis consectetur, eius, beatae totam quis itaque
-          modi ea maxime dolore consequatur. Accusamus, quod exercitationem
-          dolorum ex quibusdam, nam voluptatum nihil suscipit ab quia quam dicta
-          quae adipisci, voluptates soluta tenetur.
-        </p>
-        <a
-          href="https://malfazakki.github.io/cv/contact-me.html"
-          style="
-            text-decoration: none;
-            color: white;
-            background-color: black;
-            padding: 8px 30px;
-            border-radius: 30px;
-          "
-          >contact</a
-        >
-        <a
-          style="
-            display: block;
-            margin-top: 20px;
-            text-decoration: none;
-            color: black;
-            font-weight: 600;
-          "
-          href="https://malfazakki.github.io/cv/"
-          >download CV
-          <img
-            style="height: 15px"
-            src="images/download.svg"
-            alt="download-icon"
-        /></a>
-        <div style="width: 260px; margin: 40px auto">
-          <a href="#"
-            ><img
-              style="height: 50px; margin-right: 20px"
-              src="images/linkedin.svg"
-              alt="linkedin-icon"
-          /></a>
-          <a href="https://www.instagram.com/alfatihmuzakki/?hl=am-et"
-            ><img
-              style="height: 50px; margin-right: 20px"
-              src="images/square-instagram.svg"
-              alt="instagram-icon"
-          /></a>
-          <a href="#"
-            ><img
-              style="height: 50px; margin-right: 20px"
-              src="images/square-facebook.svg"
-              alt="facebook-icon"
-          /></a>
-          <a href="#"
-            ><img
-              style="height: 50px"
-              src="images/square-twitter.svg"
-              alt="twitter-icon"
-          /></a>
+    <!-- navbar start -->
+    <nav>
+      <div class="nav-container">
+        <ul class="kiri">
+          <li><img src="images/logo.png" alt="dumbways-logo" /></li>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">My Project</a></li>
+        </ul>
+        <ul class="kanan">
+          <li><a href="#">Contact Me</a></li>
+        </ul>
+      </div>
+    </nav>
+    <!-- navbar end -->
+
+    <!-- main start -->
+    <main>
+      <div class="container">
+        <div class="deskripsi">
+          <h1>Hi! Welcome to my hut.</h1>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure
+            delectus in voluptatibus suscipit iusto praesentium consectetur
+            officia numquam! Ea eaque assumenda eius ratione ipsum illum libero
+            voluptas quo, unde illo consequatur totam quod culpa soluta.
+          </p>
+          <div class="deskripsi-link">
+            <a
+              class="contact"
+              href="https://malfazakki.github.io/cv/contact-me.html"
+            >
+              contact
+            </a>
+            <a class="download" href="https://malfazakki.github.io/cv/"
+              >download cv <img src="icon/download.svg" alt="download-icon"
+            /></a>
+          </div>
+          <div class="akun">
+            <a href="#"
+              ><img src="icon/square-instagram.svg" alt="instagram-icon"
+            /></a>
+            <a href="#"><img src="icon/linkedin.svg" alt="linkedin-icon" /></a>
+            <a href="#"
+              ><img src="icon/square-facebook.svg" alt="facebook-icon"
+            /></a>
+            <a href="#"><img src="icon/youtube.svg" alt="youtube-icon" /></a>
+          </div>
         </div>
-        <div
-          style="
-            width: 350px;
-            margin: 0 auto;
-            border-radius: 10px;
-            box-shadow: 0 0 15px #cecece;
-            padding-bottom: 5px;
-            text-align: center;
-          "
-        >
-          <img src="images/me.png" alt="Malfazakki" style="width: 100%" />
-          <h2 style="margin-top: 10px">Malfazakki</h2>
-          <p style="margin-top: -15px">Fullstack Developer</p>
+        <div class="card-container">
+          <div class="card">
+            <img src="images/me.png" alt="malfazakki" />
+            <h2>Malfazakki</h2>
+            <p>Fullstack Developer</p>
+          </div>
         </div>
       </div>
-    </div>
+    </main>
+    <!-- main end -->
   </body>
 </html>
