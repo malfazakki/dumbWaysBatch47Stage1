@@ -148,7 +148,7 @@ form div {
 
 .card {
   flex: 1 1 1;
-  max-width: 280px;
+  max-width: 300px;
   margin: 0 auto;
   padding: 5px;
   box-sizing: border-box;
@@ -158,5 +158,19 @@ form div {
 
 .card img {
   width: 100%;
-
+  border-radius: 20px;
 }
+
+.durasi {
+  display: flex;
+  gap: 5px;
+  font-weight: 100;
+  font-size: 12px;
+}
+
+.deskripsi-artikel {
+  margin: 10px 0;
+  text-align: justify;
+}
+
+

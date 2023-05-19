@@ -1,131 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Project</title>
-    <link rel="stylesheet" href="css/nav.css" />
-    <link rel="stylesheet" href="css/my-project.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-  </head>
-  <body>
-    <!-- navbar start -->
-    <nav>
-      <div class="nav-container">
-        <ul class="kiri">
-          <li><img src="assets/images/logo.png" alt="dumbways-logo" /></li>
-          <li><a href="index.html">Home</a></li>
-          <li><a class="active" href="my-project.html">My Project</a></li>
-        </ul>
-        <ul class="kanan">
-          <li><a href="contact.html">Contact Me</a></li>
-        </ul>
-      </div>
-    </nav>
-    <!-- navbar end -->
 
-    <!-- form start -->
-    <section>
-      <div class="form-container">
-        <h1>ADD MY PROJECT</h1>
-        <form action="">
-          <div>
-            <label for="project-name">Project Name</label>
-            <input
-              class="input-data"
-              id="project-name"
-              type="text"
-              placeholder="Enter project name"
-            />
-          </div>
-          <div class="date">
-            <div>
-              <label for="start-date">Start Date</label>
-              <input class="input-data" type="date" id="start-date" />
-            </div>
-            <div>
-              <label for="end-date">End Date</label>
-              <input class="input-data" type="date" id="end-date" />
-            </div>
-          </div>
-          <div>
-            <label for="description">Description</label>
-            <textarea
-              class="input-data"
-              name="description"
-              id="description"
-              cols="30"
-              rows="10"
-              placeholder="Enter project description"
-              maxlength="140"
-            ></textarea>
-          </div>
-          <div class="techstack">
-            <div>
-              <input type="checkbox" />
-              <label>Node Js</label>
-            </div>
-            <div>
-              <input type="checkbox" />
-              <label>Next Js</label>
-            </div>
-            <div>
-              <input type="checkbox" />
-              <label>React Js</label>
-            </div>
-            <div>
-              <input type="checkbox" />
-              <label>TypeScript</label>
-            </div>
-          </div>
-          <div>
-            <label>Upload Images</label>
-            <div class="image-upload-group">
-              <label for="image-upload">
-                <div class="image-upload-label">
-                  <p>choose</p>
-                  <i class="fa-solid fa-paperclip"></i>
-                </div>
-              </label>
-              <input id="image-upload" type="file" hidden />
-            </div>
-          </div>
-          <div class="btn-submit">
-            <button class="btn"><span class="bold">submit</span></button>
-          </div>
-        </form>
-      </div>
-    </section>
-    <!-- form end -->
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Project</title>
+  <link rel="stylesheet" href="css/nav.css" />
+  <link rel="stylesheet" href="css/my-project.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
 
-    <!-- list start -->
-    <section class="my-project-list">
-      <div class="list-container">
-        <div class="card">
-          <img src="assets/images/article1.jpg" alt="article1" />
-          <h3 class="judul-artikel">Dumbways Mobile App 2021</h3>
-          <p class="durasi">durasi 3 bulan</p>
-          <p class="deskripsi-artikel">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorum
-            provident praesentium enim, natus velit dolor.
-          </p>
-          <div class="tech-images">
-            <img src="#" alt="#" />
+<body>
+  <!-- navbar start -->
+  <nav>
+    <div class="nav-container">
+      <ul class="kiri">
+        <li><img src="assets/images/logo.png" alt="dumbways-logo" /></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a class="active" href="my-project.html">My Project</a></li>
+      </ul>
+      <ul class="kanan">
+        <li><a href="contact.html">Contact Me</a></li>
+      </ul>
+    </div>
+  </nav>
+  <!-- navbar end -->
+
+  <!-- form start -->
+  <section>
+    <div class="form-container">
+      <h1>ADD MY PROJECT</h1>
+      <form action="">
+        <div>
+          <label for="project-name">Project Name</label>
+          <input class="input-data" id="project-name" type="text" placeholder="Enter project name" />
+        </div>
+        <div class="date">
+          <div>
+            <label for="start-date">Start Date</label>
+            <input class="input-data" type="date" id="start-date" />
           </div>
           <div>
-            <button>edit</button>
-            <button>delete</button>
+            <label for="end-date">End Date</label>
+            <input class="input-data" type="date" id="end-date" />
           </div>
         </div>
+        <div>
+          <label for="description">Description</label>
+          <textarea class="input-data" name="description" id="description" cols="30" rows="10"
+            placeholder="Enter project description" maxlength="140"></textarea>
+        </div>
+        <div class="techstack">
+          <div>
+            <input type="checkbox" />
+            <label>Node Js</label>
+          </div>
+          <div>
+            <input type="checkbox" />
+            <label>Next Js</label>
+          </div>
+          <div>
+            <input type="checkbox" />
+            <label>React Js</label>
+          </div>
+          <div>
+            <input type="checkbox" />
+            <label>TypeScript</label>
+          </div>
+        </div>
+        <div>
+          <label>Upload Images</label>
+          <div class="image-upload-group">
+            <label for="image-upload">
+              <div class="image-upload-label">
+                <p>choose</p>
+                <i class="fa-solid fa-paperclip"></i>
+              </div>
+            </label>
+            <input id="image-upload" type="file" hidden />
+          </div>
+        </div>
+        <div class="btn-submit">
+          <button class="btn"><span class="bold">submit</span></button>
+        </div>
+      </form>
+    </div>
+  </section>
+  <!-- form end -->
+
+  <!-- list start -->
+  <section class="my-project-list">
+    <div class="list-container">
+      <div class="card">
+        <img src="assets/images/article1.jpg" alt="article1" />
+        <h3 class="judul-artikel">Dumbways Mobile App 2023</h3>
+        <div class="durasi">
+          <p class="durasi">durasi 3 bulan</p>
+          <p class="durasi">durasi 3 bulan</p>
+        </div>
+        <p class="deskripsi-artikel">
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorum
+          provident praesentium enim, natus velit dolor.
+        </p>
+        <div class="tech-images">
+          <i class="fa-brands fa-node-js"></i>
+          <i class="fa-brands fa-react"></i>
+        </div>
+        <div>
+          <button>edit</button>
+          <button>delete</button>
+        </div>
       </div>
-    </section>
-    <!-- list end -->
-  </body>
+    </div>
+  </section>
+  <!-- list end -->
+</body>
+
 </html>
