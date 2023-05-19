@@ -35,18 +35,20 @@ nav ul li a {
 .kanan li a {
   font-size: 0.9rem;
   padding: 5px 15px;
-  background-color: black;
+  background-color: rgb(241, 96, 80);
   border-radius: 8px;
   color: white;
+  box-sizing: border-box;
 }
 
 .kanan li a:hover {
-  background-color: white;
-  border: 1px solid black;
-  color: black;
+  color: white;
+  box-shadow: inset 0 0 25px #f8a100;
+  box-sizing: border-box;
 }
 
-li a:hover {
+.kiri li a:hover,
+.active {
   font-weight: 900;
   color: rgb(211, 82, 68);
 }

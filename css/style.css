@@ -59,16 +59,15 @@ main {
 
 .contact {
   padding: 8px 20px;
-  background-color: black;
+  background-color: rgb(241, 96, 80);
   border-radius: 30px;
   color: white;
   margin-right: 20px;
 }
 
 .contact:hover {
-  background-color: white;
-  border: 1px solid black;
-  color: black;
+  color: white;
+  box-shadow: inset 0 0 25px #f8a100;
 }
 
 .akun {
