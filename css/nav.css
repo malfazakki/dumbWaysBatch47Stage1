@@ -1,0 +1,52 @@
+nav {
+  display: flex;
+  justify-content: center;
+  background-color: #dfdfdf;
+}
+
+.nav-container {
+  height: 8vh;
+  display: flex;
+  align-items: center;
+  width: 80%;
+}
+
+nav ul {
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: black;
+}
+
+.kiri {
+  flex: 70%;
+  gap: 50px;
+}
+
+.kanan {
+  flex: 30%;
+  justify-content: flex-end;
+}
+
+.kanan li a {
+  font-size: 0.9rem;
+  padding: 5px 15px;
+  background-color: black;
+  border-radius: 8px;
+  color: white;
+}
+
+.kanan li a:hover {
+  background-color: white;
+  border: 1px solid black;
+  color: black;
+}
+
+li a:hover {
+  font-weight: 900;
+  color: rgb(211, 82, 68);
+}
