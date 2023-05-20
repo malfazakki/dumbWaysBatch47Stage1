@@ -148,7 +148,6 @@ form div {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-content: first baseline;
   column-gap: 2rem;
   row-gap: 70px;
 }
