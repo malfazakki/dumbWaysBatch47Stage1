@@ -72,10 +72,10 @@ main {
 
 .akun {
   margin-top: 40px;
-  width: 80%;
+  width: 100%;
   height: 35px;
   display: flex;
-  gap: 20px;
+  gap: 3rem;
 }
 
 .akun img {
@@ -122,12 +122,18 @@ main {
     width: 100%;
     margin: 40px auto 0;
     justify-content: flex-start;
-    gap: 20px;
+    gap: 3rem;
     padding-left: 10px;
   }
 
   .card-container {
     padding: 0 5vh 7vh;
+    width: 40%;
+    margin: 0 auto;
+  }
+
+  .deskripsi {
+    padding-bottom: 50px;
   }
 
   .card {

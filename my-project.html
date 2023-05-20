@@ -33,7 +33,7 @@
   <section>
     <div class="form-container">
       <h1>ADD MY PROJECT</h1>
-      <form action="">
+      <form onsubmit="addProject(event)">
         <div>
           <label for="project-name">Project Name</label>
           <input class="input-data" id="project-name" type="text" placeholder="Enter project name" />
@@ -55,20 +55,20 @@
         </div>
         <div class="techstack">
           <div>
-            <input type="checkbox" />
+            <input type="checkbox" id="nodeJs" value="nodeJs" />
             <label>Node Js</label>
           </div>
           <div>
-            <input type="checkbox" />
-            <label>Next Js</label>
+            <input type="checkbox" id="react" value="react" />
+            <label>React</label>
           </div>
           <div>
-            <input type="checkbox" />
-            <label>React Js</label>
+            <input type="checkbox" id="bootstrap" value="bootstrap" />
+            <label>Bootstrap</label>
           </div>
           <div>
-            <input type="checkbox" />
-            <label>TypeScript</label>
+            <input type="checkbox" id="laravel" value="laravel" />
+            <label>Laravel</label>
           </div>
         </div>
         <div>
@@ -93,10 +93,12 @@
 
   <!-- list start -->
   <section class="my-project-list">
-    <div class="list-container">
+    <div id="contents" class="list-container">
+
+      <!-- card -->
       <div class="card">
         <img src="assets/images/article1.jpg" alt="article1" />
-        <h3 class="judul-artikel">Dumbways Mobile App 2023</h3>
+        <h3 class="judul-artikel"><a href="blog-detail.html">Dumbways Mobile 2023</a></h3>
         <div class="durasi">
           <p class="durasi">durasi 3 bulan</p>
           <p class="durasi">durasi 3 bulan</p>
@@ -106,17 +108,23 @@
           provident praesentium enim, natus velit dolor.
         </p>
         <div class="tech-images">
-          <i class="fa-brands fa-node-js"></i>
-          <i class="fa-brands fa-react"></i>
+          <i class="fa-brands fa-node-js fa-xl"></i>
+          <i class="fa-brands fa-react fa-xl"></i>
+          <i class="fa-brands fa-bootstrap fa-xl"></i>
+          <i class="fa-brands fa-laravel"></i>
         </div>
-        <div>
-          <button>edit</button>
-          <button>delete</button>
+        <div class="btn-artikel">
+          <button class="btn-edit">edit</button>
+          <button class="btn-delete">delete</button>
         </div>
       </div>
+      <!-- card end -->
+
     </div>
   </section>
   <!-- list end -->
+
+  <script src="js/my-project.js"></script>
 </body>
 
 </html>
