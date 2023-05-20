@@ -1,130 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Project</title>
+    <link rel="stylesheet" href="css/nav.css" />
+    <link rel="stylesheet" href="css/my-project.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Project</title>
-  <link rel="stylesheet" href="css/nav.css" />
-  <link rel="stylesheet" href="css/my-project.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
-
-<body>
-  <!-- navbar start -->
-  <nav>
-    <div class="nav-container">
-      <ul class="kiri">
-        <li><img src="assets/images/logo.png" alt="dumbways-logo" /></li>
-        <li><a href="index.html">Home</a></li>
-        <li><a class="active" href="my-project.html">My Project</a></li>
-      </ul>
-      <ul class="kanan">
-        <li><a href="contact.html">Contact Me</a></li>
-      </ul>
-    </div>
-  </nav>
-  <!-- navbar end -->
-
-  <!-- form start -->
-  <section>
-    <div class="form-container">
-      <h1>ADD MY PROJECT</h1>
-      <form onsubmit="addProject(event)">
-        <div>
-          <label for="project-name">Project Name</label>
-          <input class="input-data" id="project-name" type="text" placeholder="Enter project name" />
-        </div>
-        <div class="date">
-          <div>
-            <label for="start-date">Start Date</label>
-            <input class="input-data" type="date" id="start-date" />
-          </div>
-          <div>
-            <label for="end-date">End Date</label>
-            <input class="input-data" type="date" id="end-date" />
-          </div>
-        </div>
-        <div>
-          <label for="description">Description</label>
-          <textarea class="input-data" name="description" id="description" cols="30" rows="10"
-            placeholder="Enter project description" maxlength="140"></textarea>
-        </div>
-        <div class="techstack">
-          <div>
-            <input type="checkbox" id="nodeJs" value="nodeJs" />
-            <label>Node Js</label>
-          </div>
-          <div>
-            <input type="checkbox" id="react" value="react" />
-            <label>React</label>
-          </div>
-          <div>
-            <input type="checkbox" id="bootstrap" value="bootstrap" />
-            <label>Bootstrap</label>
-          </div>
-          <div>
-            <input type="checkbox" id="laravel" value="laravel" />
-            <label>Laravel</label>
-          </div>
-        </div>
-        <div>
-          <label>Upload Images</label>
-          <div class="image-upload-group">
-            <label for="image-upload">
-              <div class="image-upload-label">
-                <p>choose</p>
-                <i class="fa-solid fa-paperclip"></i>
-              </div>
-            </label>
-            <input id="image-upload" type="file" hidden />
-          </div>
-        </div>
-        <div class="btn-submit">
-          <button class="btn"><span class="bold">submit</span></button>
-        </div>
-      </form>
-    </div>
-  </section>
-  <!-- form end -->
-
-  <!-- list start -->
-  <section class="my-project-list">
-    <div id="contents" class="list-container">
-
-      <!-- card -->
-      <div class="card">
-        <img src="assets/images/article1.jpg" alt="article1" />
-        <h3 class="judul-artikel"><a href="blog-detail.html">Dumbways Mobile 2023</a></h3>
-        <div class="durasi">
-          <p class="durasi">durasi 3 bulan</p>
-          <p class="durasi">durasi 3 bulan</p>
-        </div>
-        <p class="deskripsi-artikel">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorum
-          provident praesentium enim, natus velit dolor.
-        </p>
-        <div class="tech-images">
-          <i class="fa-brands fa-node-js fa-xl"></i>
-          <i class="fa-brands fa-react fa-xl"></i>
-          <i class="fa-brands fa-bootstrap fa-xl"></i>
-          <i class="fa-brands fa-laravel"></i>
-        </div>
-        <div class="btn-artikel">
-          <button class="btn-edit">edit</button>
-          <button class="btn-delete">delete</button>
-        </div>
+  <body>
+    <!-- navbar start -->
+    <nav>
+      <div class="nav-container">
+        <ul class="kiri">
+          <li><img src="assets/images/logo.png" alt="dumbways-logo" /></li>
+          <li><a href="index.html">Home</a></li>
+          <li><a class="active" href="my-project.html">My Project</a></li>
+        </ul>
+        <ul class="kanan">
+          <li><a href="contact.html">Contact Me</a></li>
+        </ul>
       </div>
-      <!-- card end -->
+    </nav>
+    <!-- navbar end -->
 
-    </div>
-  </section>
-  <!-- list end -->
+    <!-- form start -->
+    <section>
+      <div class="form-container">
+        <h1>ADD MY PROJECT</h1>
+        <form onsubmit="addProject(event)">
+          <div>
+            <label for="project-name">Project Name</label>
+            <input
+              class="input-data"
+              id="project-name"
+              type="text"
+              placeholder="Enter project name"
+            />
+          </div>
+          <div class="date">
+            <div>
+              <label for="start-date">Start Date</label>
+              <input class="input-data" type="date" id="start-date" />
+            </div>
+            <div>
+              <label for="end-date">End Date</label>
+              <input class="input-data" type="date" id="end-date" />
+            </div>
+          </div>
+          <div>
+            <label for="description">Description</label>
+            <textarea
+              class="input-data"
+              name="description"
+              id="description"
+              cols="30"
+              rows="10"
+              placeholder="Enter project description"
+              maxlength="140"
+            ></textarea>
+          </div>
+          <div class="techstack">
+            <div>
+              <input type="checkbox" id="nodeJs" value="nodeJs" />
+              <label>Node Js</label>
+            </div>
+            <div>
+              <input type="checkbox" id="react" value="react" />
+              <label>React</label>
+            </div>
+            <div>
+              <input type="checkbox" id="bootstrap" value="bootstrap" />
+              <label>Bootstrap</label>
+            </div>
+            <div>
+              <input type="checkbox" id="laravel" value="laravel" />
+              <label>Laravel</label>
+            </div>
+          </div>
+          <div>
+            <label>Upload Images</label>
+            <div class="image-upload-group">
+              <label for="image-upload">
+                <div class="image-upload-label">
+                  <p>choose</p>
+                  <i class="fa-solid fa-paperclip"></i>
+                </div>
+              </label>
+              <input id="image-upload" type="file" hidden />
+            </div>
+          </div>
+          <div class="btn-submit">
+            <button class="btn"><span class="bold">submit</span></button>
+          </div>
+        </form>
+      </div>
+    </section>
+    <!-- form end -->
 
-  <script src="js/my-project.js"></script>
-</body>
+    <!-- list start -->
+    <section class="my-project-list">
+      <div id="contents" class="list-container">
+        <h1>My Project</h1>
+        <!-- card -->
+        <div class="card">
+          <img src="assets/images/article1.jpg" alt="article1" />
+          <h3 class="judul-artikel">
+            <a href="blog-detail.html">Dumbways Mobile 2023</a>
+          </h3>
+          <div class="durasi">
+            <p class="durasi">durasi 3 bulan</p>
+            <p class="durasi">durasi 3 bulan</p>
+          </div>
+          <p class="deskripsi-artikel">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorum
+            provident praesentium enim, natus velit dolor.
+          </p>
+          <div class="tech-images">
+            <i class="fa-brands fa-node-js fa-xl"></i>
+            <i class="fa-brands fa-react fa-xl"></i>
+            <i class="fa-brands fa-bootstrap fa-xl"></i>
+            <i class="fa-brands fa-laravel"></i>
+          </div>
+          <div class="btn-artikel">
+            <button class="btn-edit">edit</button>
+            <button class="btn-delete">delete</button>
+          </div>
+        </div>
+        <!-- card end -->
+        <!-- card -->
+        <div class="card">
+          <img src="assets/images/article2.jpg" alt="article1" />
+          <h3 class="judul-artikel">
+            <a href="blog-detail.html">Dumbways Mobile 2023</a>
+          </h3>
+          <div class="durasi">
+            <p class="durasi">durasi 3 bulan</p>
+            <p class="durasi">durasi 3 bulan</p>
+          </div>
+          <p class="deskripsi-artikel">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorum
+            provident praesentium enim, natus velit dolor.
+          </p>
+          <div class="tech-images">
+            <i class="fa-brands fa-node-js fa-xl"></i>
+            <i class="fa-brands fa-react fa-xl"></i>
+            <i class="fa-brands fa-bootstrap fa-xl"></i>
+            <i class="fa-brands fa-laravel"></i>
+          </div>
+          <div class="btn-artikel">
+            <button class="btn-edit">edit</button>
+            <button class="btn-delete">delete</button>
+          </div>
+        </div>
+        <!-- card end -->
+        <!-- card -->
+        <div class="card">
+          <img src="assets/images/article3.jpg" alt="article1" />
+          <h3 class="judul-artikel">
+            <a href="blog-detail.html">Dumbways Mobile 2023</a>
+          </h3>
+          <div class="durasi">
+            <p class="durasi">durasi 3 bulan</p>
+            <p class="durasi">durasi 3 bulan</p>
+          </div>
+          <p class="deskripsi-artikel">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorum
+            provident praesentium enim, natus velit dolor.
+          </p>
+          <div class="tech-images">
+            <i class="fa-brands fa-node-js fa-xl"></i>
+            <i class="fa-brands fa-react fa-xl"></i>
+            <i class="fa-brands fa-bootstrap fa-xl"></i>
+            <i class="fa-brands fa-laravel"></i>
+          </div>
+          <div class="btn-artikel">
+            <button class="btn-edit">edit</button>
+            <button class="btn-delete">delete</button>
+          </div>
+        </div>
+        <!-- card end -->
+      </div>
+    </section>
+    <!-- list end -->
 
+    <script src="js/my-project.js"></script>
+  </body>
 </html>

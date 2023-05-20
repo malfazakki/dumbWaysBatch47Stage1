@@ -37,7 +37,8 @@ function addProject(event) {
 }
 
 function renderProject() {
-  for (let index = 0; index < dataProject.length; index++) {
+  document.getElementById("contents").innerHTML = "";
+  for (let index = 0; index < dataProject.length; index++) {  
     document.getElementById("contents").innerHTML += `
       <div class="card">
         <img src="${dataProject[index].image}" alt="${dataProject[index].title}" />
@@ -52,7 +53,6 @@ function renderProject() {
           ${dataProject[index].description}
         </p>
         <div class="techimages">
-          ${nodeJs}
         </div>
         <div class="btn-artikel">
           <button class="btn-edit">edit</button>
