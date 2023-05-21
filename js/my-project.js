@@ -16,8 +16,21 @@ function addProject(event) {
     description === "" ||
     image === ""
   ) {
-    alert("Pastikan semua kolom formulir terisi!");
+    return alert("Pastikan semua kolom formulir terisi!");
   }
+
+  nodeIcon = '<i class="fa-brands fa-node-js fa-xl"></i>';
+
+  let nodeChecked = document.getElementById("nodeJs").checked ? nodeIcon : "";
+  let reactChecked = document.getElementById("react").checked
+    ? '<i class="fa-brands fa-react fa-xl"></i>'
+    : "";
+  let bootstrapChecked = document.getElementById("bootstrap").checked
+    ? '<i class="fa-brands fa-bootstrap fa-xl"></i>'
+    : "";
+  let laravelChecked = document.getElementById("laravel").checked
+    ? '<i class="fa-brands fa-laravel fa-xl"></i>'
+    : "";
 
   image = URL.createObjectURL(image[0]);
   console.log(image);
@@ -28,6 +41,10 @@ function addProject(event) {
     endDate,
     description,
     image,
+    nodeChecked,
+    reactChecked,
+    bootstrapChecked,
+    laravelChecked,
   };
 
   dataProject.push(project);
@@ -38,7 +55,8 @@ function addProject(event) {
 
 function renderProject() {
   document.getElementById("contents").innerHTML = "";
-  for (let index = 0; index < dataProject.length; index++) {  
+
+  for (let index = 0; index < dataProject.length; index++) {
     document.getElementById("contents").innerHTML += `
       <div class="card">
         <img src="${dataProject[index].image}" alt="${dataProject[index].title}" />
@@ -53,6 +71,10 @@ function renderProject() {
           ${dataProject[index].description}
         </p>
         <div class="techimages">
+          ${dataProject[index].nodeChecked}
+          ${dataProject[index].reactChecked}
+          ${dataProject[index].bootstrapChecked}
+          ${dataProject[index].laravelChecked}
         </div>
         <div class="btn-artikel">
           <button class="btn-edit">edit</button>
