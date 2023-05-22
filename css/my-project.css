@@ -194,6 +194,7 @@ form div {
 .deskripsi-artikel {
   margin: 10px 0;
   text-align: justify;
+  height: 90px;
 }
 
 .tech-images {
