@@ -8,13 +8,14 @@ function addProject(event) {
   let endDate = document.getElementById("end-date").value;
   let description = document.getElementById("description").value;
   let image = document.getElementById("image-upload").files;
+  let imageCheck = document.getElementById("image-upload").value;
 
   if (
     title === "" ||
     startDate === "" ||
     endDate === "" ||
     description === "" ||
-    image === ""
+    imageCheck == ""
   ) {
     return alert("Pastikan semua kolom formulir terisi!");
   }
@@ -33,18 +34,22 @@ function addProject(event) {
     : "";
 
   image = URL.createObjectURL(image[0]);
+  const selesai = moment(startDate);
+  const mulai = moment(endDate);
+  const durasi = mulai.diff(selesai, "months");
   console.log(image);
 
   let project = {
     title,
-    startDate,
-    endDate,
+    durasi,
     description,
     image,
     nodeChecked,
     reactChecked,
     bootstrapChecked,
     laravelChecked,
+    postAt: new Date(),
+    author: "Malfazakki",
   };
 
   dataProject.push(project);
@@ -59,22 +64,37 @@ function renderProject() {
   for (let index = 0; index < dataProject.length; index++) {
     document.getElementById("contents").innerHTML += `
       <div class="card">
-        <img src="${dataProject[index].image}" alt="${dataProject[index].title}" />
+        <img src="${dataProject[index].image}" alt="${
+      dataProject[index].title
+    }" />
         <h3 class="judul-artikel">
-          <a href="project-detail.html" target="_blank">${dataProject[index].title}</a>
+          <a href="project-detail.html" target="_blank">${
+            dataProject[index].title
+          }</a>
         </h3>
         <div class="durasi">
-          <p class="durasi">${dataProject[index].startDate}</p>
-          <p class="durasi">${dataProject[index].endDate}</p>
+          <p>Durasi ${dataProject[index].durasi} Bulan</p>
+          <p>Posted On:  ${getFullTime(dataProject[index].postAt)}</p>
+          <p>by: ${dataProject[index].author}</p>
+          <div>
+         
+          </div>
         </div>
-        <p class="deskripsi-artikel">
-          ${dataProject[index].description}
-        </p>
-        <div class="techimages">
-          ${dataProject[index].nodeChecked}
-          ${dataProject[index].reactChecked}
-          ${dataProject[index].bootstrapChecked}
-          ${dataProject[index].laravelChecked}
+        <div class="deskripsi-artikel">
+          <p>
+           ${dataProject[index].description}
+          </p>
+        </div>      
+        <div class="tech-images">
+        ${dataProject[index].nodeChecked}
+        ${dataProject[index].reactChecked}
+        ${dataProject[index].bootstrapChecked}
+        ${dataProject[index].laravelChecked}
+        </div>
+        <div class="waktu-berlalu">
+          <p>
+          ${getDistanceTime(dataProject[index].postAt)}
+          </p>
         </div>
         <div class="btn-artikel">
           <button class="btn-edit">edit</button>
@@ -84,3 +104,76 @@ function renderProject() {
     `;
   }
 }
+
+function getFullTime(time) {
+  let monthName = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  // console.log(monthName[8]);
+
+  let date = time.getDate();
+  // console.log(date);
+
+  let monthIndex = time.getMonth();
+  // console.log(monthIndex);
+
+  let year = time.getFullYear();
+  // console.log(year);
+
+  let hours = time.getHours();
+  let minutes = time.getMinutes();
+  // console.log(minutes);
+
+  if (hours <= 9) {
+    hours = "0" + hours;
+  } else if (minutes <= 9) {
+    minutes = "0" + minutes;
+  }
+
+  return `${date} ${monthName[monthIndex]} ${year} ${hours}:${minutes} WIB`;
+}
+
+function getDistanceTime(time) {
+  let timeNow = new Date();
+  let timePost = time;
+
+  // waktu sekarang - waktu post
+  let distance = timeNow - timePost; // hasilnya milidetik
+  console.log(distance);
+
+  let milisecond = 1000; // milisecond
+  let secondInHours = 3600; // 1 jam 3600 detik
+  let hoursInDays = 24; // 1 hari 24 jam
+
+  let distanceDay = Math.floor(
+    distance / (milisecond * secondInHours * hoursInDays)
+  ); // 1/86400000
+  let distanceHours = Math.floor(distance / (milisecond * 60 * 60)); // 1/3600000
+  let distanceMinutes = Math.floor(distance / (milisecond * 60)); // 1/60000
+  let distanceSeconds = Math.floor(distance / milisecond); // 1/1000
+
+  if (distanceDay > 0) {
+    return `${distanceDay} Day Ago`;
+  } else if (distanceHours > 0) {
+    return `${distanceHours} Hours Ago`;
+  } else if (distanceMinutes > 0) {
+    return `${distanceMinutes} Minutes Ago`;
+  } else {
+    return `${distanceSeconds} Seconds Ago`;
+  }
+}
+
+// setInterval(function () {
+//   renderProject();
+// }, 10000);

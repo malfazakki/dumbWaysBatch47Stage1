@@ -52,3 +52,19 @@ nav ul li a {
   font-weight: 900;
   color: rgb(211, 82, 68);
 }
+
+@media (max-width: 600px) {
+  .kiri {
+    gap: 15px;
+    font-size: smaller;
+  }
+
+  .kanan li a {
+    font-size: 0.7rem;
+    padding: 3px 10px;
+    background-color: rgb(241, 96, 80);
+    border-radius: 8px;
+    color: white;
+    box-sizing: border-box;
+  }
+}
