@@ -91,11 +91,6 @@ function renderProject() {
         ${dataProject[index].bootstrapChecked}
         ${dataProject[index].laravelChecked}
         </div>
-        <div class="waktu-berlalu">
-          <p>
-          ${getDistanceTime(dataProject[index].postAt)}
-          </p>
-        </div>
         <div class="btn-artikel">
           <button class="btn-edit">edit</button>
           <button class="btn-delete">delete</button>
@@ -173,7 +168,3 @@ function getDistanceTime(time) {
     return `${distanceSeconds} Seconds Ago`;
   }
 }
-
-// setInterval(function () {
-//   renderProject();
-// }, 10000);
