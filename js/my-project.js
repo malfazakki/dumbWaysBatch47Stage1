@@ -36,12 +36,23 @@ function addProject(event) {
   image = URL.createObjectURL(image[0]);
   const selesai = moment(startDate);
   const mulai = moment(endDate);
-  const durasi = mulai.diff(selesai, "months");
+  const dayDuration = mulai.diff(selesai, "days");
+  const monthDuration = mulai.diff(selesai, "months");
+  const yearsDuration = mulai.diff(selesai, "years");
+  let duration;
+
+  if (monthDuration > 0) {
+    duration = `duration: ${monthDuration} months`;
+  } else if (yearsDuration > 0) {
+    duration = `duration: ${yearsDuration} years`;
+  } else {
+    duration = `duration: $ {dayDuration} days`;
+  }
   console.log(image);
 
   let project = {
     title,
-    durasi,
+    duration,
     description,
     image,
     nodeChecked,
@@ -72,8 +83,8 @@ function renderProject() {
             dataProject[index].title
           }</a>
         </h3>
-        <div class="durasi">
-          <p>Durasi ${dataProject[index].durasi} Bulan</p>
+        <div class="duration">
+          <p>${dataProject[index].duration}</p>
           <p>Posted On:  ${getFullTime(dataProject[index].postAt)}</p>
           <p>by: ${dataProject[index].author}</p>
           <div>
@@ -139,32 +150,50 @@ function getFullTime(time) {
   return `${date} ${monthName[monthIndex]} ${year} ${hours}:${minutes} WIB`;
 }
 
-function getDistanceTime(time) {
-  let timeNow = new Date();
-  let timePost = time;
+// function getDistanceTime(time) {
+//   let timeNow = new Date();
+//   let timePost = time;
 
-  // waktu sekarang - waktu post
-  let distance = timeNow - timePost; // hasilnya milidetik
-  console.log(distance);
+//   // waktu sekarang - waktu post
+//   let distance = timeNow - timePost; // hasilnya milidetik
+//   console.log(distance);
 
-  let milisecond = 1000; // milisecond
-  let secondInHours = 3600; // 1 jam 3600 detik
-  let hoursInDays = 24; // 1 hari 24 jam
+//   let milisecond = 1000; // milisecond
+//   let secondInHours = 3600; // 1 jam 3600 detik
+//   let hoursInDays = 24; // 1 hari 24 jam
+//   let daysInWeek = 7; // 1 minggu 7 hari
+//   let weeksInMonth = 4; // 1 bulan 4 minggu
+//   let monthsInYear = 12; // 1 tahun 12 bulan
 
-  let distanceDay = Math.floor(
-    distance / (milisecond * secondInHours * hoursInDays)
-  ); // 1/86400000
-  let distanceHours = Math.floor(distance / (milisecond * 60 * 60)); // 1/3600000
-  let distanceMinutes = Math.floor(distance / (milisecond * 60)); // 1/60000
-  let distanceSeconds = Math.floor(distance / milisecond); // 1/1000
+//   let distanceDay = Math.floor(
+//     distance / (milisecond * secondInHours * hoursInDays)
+//   );
+//   let distanceWeek = Math.floor(
+//     distance / (milisecond * secondInHours * hoursInDays * daysInWeek)
+//   );
+//   let distanceMonth = Math.floor(
+//     distance /
+//       (milisecond * secondInHours * hoursInDays * daysInWeek * weeksInMonth)
+//   );
+//   let distanceYear = Math.floor(
+//     distance /
+//       (milisecond *
+//         secondInHours *
+//         hoursInDays *
+//         daysInWeek *
+//         weeksInMonth *
+//         monthsInYear)
+//   );
 
-  if (distanceDay > 0) {
-    return `${distanceDay} Day Ago`;
-  } else if (distanceHours > 0) {
-    return `${distanceHours} Hours Ago`;
-  } else if (distanceMinutes > 0) {
-    return `${distanceMinutes} Minutes Ago`;
-  } else {
-    return `${distanceSeconds} Seconds Ago`;
-  }
-}
+//   if (distanceYear > 0) {
+//     return `duration: ${distanceYear} years`;
+//   } else if (distanceMonth > 0) {
+//     return `duration: ${distanceMonth} months`;
+//   } else if (distanceWeek > 0) {
+//     return `duration: ${distanceWeek} weeks`;
+//   } else if (distanceDay > 0) {
+//     return `duration: ${distanceDay} days`;
+//   } else {
+//     return alert("Invalid Date input");
+//   }
+// }

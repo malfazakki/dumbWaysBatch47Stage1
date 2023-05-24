@@ -165,7 +165,7 @@ form div {
 .card {
   min-width: 260px;
   margin: 0 auto;
-  padding: 10px;
+  padding: 20px;
   box-sizing: border-box;
   box-shadow: 1.7px 1.3px 2.7px rgba(0, 0, 0, 0.009),
     4.3px 3.4px 6.9px rgba(0, 0, 0, 0.013),
@@ -178,6 +178,7 @@ form div {
 
 .card img {
   width: 100%;
+  margin: auto;
   height: 170px;
   object-fit: cover;
   border-radius: 20px;
@@ -188,7 +189,7 @@ form div {
   margin: 10px auto 15px;
   font-size: 20px;
   display: block;
-  width: 80%;
+  width: 100%;
 }
 
 .card a {
@@ -200,11 +201,11 @@ form div {
   color: rgb(241, 96, 80);
 }
 
-.durasi {
+.duration {
   display: flex;
   font-weight: 100;
   font-size: 10px;
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
   text-align: left;
   gap: 5px;
@@ -216,7 +217,7 @@ form div {
   text-align: justify;
   height: 60px;
   overflow: hidden;
-  width: 80%;
+  width: 100%;
   font-size: 14px;
 }
 
@@ -226,11 +227,11 @@ form div {
   align-items: center;
   margin: 10px auto;
   gap: 10px;
-  width: 80%;
+  width: 100%;
 }
 
 .waktu-berlalu {
-  width: 80%;
+  width: 90%;
   margin: 0 auto 20px;
   font-size: 10px;
   color: gray;
@@ -240,7 +241,7 @@ form div {
 .btn-artikel {
   display: flex;
   justify-content: center;
-  width: 80%;
+  width: 100%;
   gap: 10px;
   box-sizing: border-box;
   margin: 0 auto 20px;
@@ -290,9 +291,9 @@ form div {
   .list-card .card {
     padding: 20px;
     box-shadow: 1.7px 1.3px 2.7px rgba(0, 0, 0, 0.009),
-    4.3px 3.4px 6.9px rgba(0, 0, 0, 0.013),
-    8.9px 6.9px 14.2px rgba(0, 0, 0, 0.017),
-    18.3px 14.2px 29.2px rgba(0, 0, 0, 0.021),
-    50px 39px 80px rgba(0, 0, 0, 0.03);
+      4.3px 3.4px 6.9px rgba(0, 0, 0, 0.013),
+      8.9px 6.9px 14.2px rgba(0, 0, 0, 0.017),
+      18.3px 14.2px 29.2px rgba(0, 0, 0, 0.021),
+      50px 39px 80px rgba(0, 0, 0, 0.03);
   }
 }
