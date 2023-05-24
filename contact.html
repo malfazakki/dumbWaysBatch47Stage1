@@ -1,65 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact Me</title>
-    <link rel="stylesheet" href="css/contact.css" />
-    <link rel="stylesheet" href="css/nav.css" />
-  </head>
 
-  <body>
-    <!-- navbar start -->
-    <nav>
-      <div class="nav-container">
-        <ul class="kiri">
-          <li><img src="assets/images/logo.png" alt="dumbways-logo" /></li>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="my-project.html">My Project</a></li>
-        </ul>
-        <ul class="kanan">
-          <li><a href="index.html">Portofolio</a></li>
-        </ul>
-      </div>
-    </nav>
-    <!-- navbar end -->
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Me</title>
+  <link rel="stylesheet" href="css/contact.css" />
+  <link rel="stylesheet" href="css/nav.css" />
+</head>
 
-    <main>
-      <div class="container">
-        <h2>GET IN TOUCH</h2>
-        <form action="">
-          <div>
-            <label for="name">Name</label>
-            <input id="name" class="input name" type="text" />
-          </div>
-          <div>
-            <label for="email">Email</label>
-            <input id="email" class="input email" type="text" />
-          </div>
-          <div>
-            <label for="phone-number">Phone Number</label>
-            <input id="phone-number" class="input phone-number" type="text" />
-          </div>
-          <div>
-            <label for="subject">Subject</label>
-            <select name="subject" id="subject">
-              <option hidden>Select Subject</option>
-              <option>Frontend</option>
-              <option>Backend</option>
-              <option>Fullstack</option>
-            </select>
-          </div>
-          <div>
-            <label for="messages">Your Message</label>
-            <textarea name="" id="messages" rows="7"></textarea>
-          </div>
-          <div class="button">
-            <button type="button" onclick="submitData()">Submit</button>
-          </div>
-        </form>
+<body>
+  <!-- navbar start -->
+  <nav>
+    <div class="nav-container">
+      <div class="logo">
+        <img src="assets/images/logo.png" alt="Logo Dumbways">
       </div>
-    </main>
-    <script src="js/contact.js"></script>
-  </body>
+      <ul class="nav-menu">
+        <li class="nav-item"><a class="link nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="link nav-link" href="my-project.html">My Project</a></li>
+        <li class="nav-item"><a class="nav-link contact-me" href="contact.html">Contact Me</a></li>
+      </ul>
+      <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </div>
+  </nav>
+  <!-- navbar end -->
+
+  <main>
+    <div class="container">
+      <h2>GET IN TOUCH</h2>
+      <form action="">
+        <div>
+          <label for="name">Name</label>
+          <input id="name" class="input name" type="text" />
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input id="email" class="input email" type="text" />
+        </div>
+        <div>
+          <label for="phone-number">Phone Number</label>
+          <input id="phone-number" class="input phone-number" type="text" />
+        </div>
+        <div>
+          <label for="subject">Subject</label>
+          <select name="subject" id="subject">
+            <option hidden>Select Subject</option>
+            <option>Frontend</option>
+            <option>Backend</option>
+            <option>Fullstack</option>
+          </select>
+        </div>
+        <div>
+          <label for="messages">Your Message</label>
+          <textarea name="" id="messages" rows="7"></textarea>
+        </div>
+        <div class="button">
+          <button type="button" onclick="submitData()">Submit</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script src="js/nav.js"></script>
+  <script src="js/contact.js"></script>
+</body>
+
 </html>

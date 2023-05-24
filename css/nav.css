@@ -1,70 +1,134 @@
+* {
+  list-style-type: none;
+  color: black;
+  text-decoration: none;
+}
+
 nav {
+  background-color: #cdcdcd;
+  width: 100%;
+  height: 8vh;
   display: flex;
-  justify-content: center;
-  background-color: #dfdfdf;
+  position: fixed;
+  top: 0;
 }
 
 .nav-container {
-  height: 8vh;
   display: flex;
   align-items: center;
+  height: 100%;
   width: 80%;
+  margin: 0 auto;
 }
 
-nav ul {
+.nav-menu {
+  width: 100%;
+  display: flex;
+  gap: 30px;
+  margin-left: 30px;
+}
+
+.link:hover {
+  color: rgb(241, 96, 80);
+  transition: 0.3s ease-out;
+}
+
+.logo {
   display: flex;
   align-items: center;
-  list-style-type: none;
 }
 
-nav ul li a {
-  text-decoration: none;
-  color: black;
-}
-
-.kiri {
-  flex: 70%;
-  gap: 50px;
-}
-
-.kanan {
-  flex: 30%;
-  justify-content: flex-end;
-}
-
-.kanan li a {
-  font-size: 0.9rem;
-  padding: 5px 15px;
+.contact-me {
+  padding: 3px 15px;
   background-color: rgb(241, 96, 80);
   border-radius: 8px;
   color: white;
   box-sizing: border-box;
+  transition: 0.3s ease-out;
+  position: fixed;
+  right: 10vw;
 }
 
-.kanan li a:hover {
-  color: white;
+.contact-me:hover {
   box-shadow: inset 0 0 25px #f8a100;
   box-sizing: border-box;
+  transition: 0.3s ease-out;
 }
 
-.kiri li a:hover,
-.active {
-  font-weight: 900;
+.active,
+.kiri a:hover {
   color: rgb(211, 82, 68);
 }
 
-@media (max-width: 600px) {
-  .kiri {
-    gap: 15px;
-    font-size: smaller;
+.hamburger {
+  display: none;
+  cursor: pointer;
+}
+
+.bar {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 5px auto;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  background-color: black;
+}
+
+@media (max-width: 768px) or (min-height: 1080px) {
+  .nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
-  .kanan li a {
-    font-size: 0.7rem;
-    padding: 3px 10px;
+  .hamburger {
+    display: block;
+  }
+
+  .hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .hamburger.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  .nav-menu {
+    position: fixed;
+    left: -120%;
+    top: 8vh;
+    gap: 0;
+    flex-direction: column;
+    background-color: white;
+    width: 100%;
+    text-align: center;
+    transition: 0.3s;
+    box-shadow: -11px 14px 26px -12px rgba(122, 122, 122, 1);
+    padding: 10px 0;
+  }
+
+  .nav-item {
+    margin: 0 auto;
+    padding: 10px;
+  }
+
+  .nav-menu.active {
+    left: 0;
+    margin: 0;
+  }
+
+  .contact-me {
+    padding: 3px 15px;
     background-color: rgb(241, 96, 80);
     border-radius: 8px;
     color: white;
     box-sizing: border-box;
+    transition: 0.3s ease-out;
+    position: static;
   }
 }

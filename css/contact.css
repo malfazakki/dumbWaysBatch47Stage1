@@ -9,6 +9,7 @@ body {
   font-family: "Poppins", sans-serif;
   text-decoration: none;
   background-color: rgb(168, 184, 190);
+  margin-top: 9vh;
 }
 
 main {
@@ -67,6 +68,17 @@ button {
 
 @media (max-width: 768px) {
   .container {
-    width: 60%;
+    width: 90%;
   }
 }
+
+@media (min-height: 1024px) or (max-width: 1024px) {
+  .container {
+    font-size: 2rem;
+    width: 80%;
+  }
+
+
+}
+
+
