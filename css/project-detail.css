@@ -25,7 +25,6 @@ header {
 }
 
 .images {
-
 }
 
 .images img {
@@ -65,11 +64,18 @@ header {
 
 main {
   width: 80%;
-  margin-right:20%;
+  margin-right: 20%;
   margin-left: 10%;
 }
 
 main p {
   text-align: justify;
   margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .hero {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+  }
 }
