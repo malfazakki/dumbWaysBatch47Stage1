@@ -20,13 +20,13 @@ function submitData() {
   let aEmail = document.createElement("a");
   aEmail.href = `mailto:${emailReceiver}?subject=${subject}&body=Halo, nama saya ${name}, ${messages}. Silakan kontak saya di nomor ${phoneNumber}, terima kasih.`;
   aEmail.click();
-  
+
   console.log(name);
   console.log(email);
   console.log(phoneNumber);
   console.log(subject);
   console.log(messages);
-  
+
   let emailer = {
     name,
     email,
@@ -34,9 +34,6 @@ function submitData() {
     subject,
     messages,
   };
-  
-  console.log(emailer);
-  alert("Berhasil mengirimkan Email.");
-  window.location="index.html";
-}
 
+  console.log(emailer);
+}

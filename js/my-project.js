@@ -69,6 +69,7 @@ function addProject(event) {
   console.log(dataProject);
 
   renderProject();
+  resetForm();
 }
 
 function renderProject() {
@@ -150,4 +151,8 @@ function getFullTime(time) {
   }
 
   return `${date} ${monthName[monthIndex]} ${year} ${hours}:${minutes} WIB`;
+}
+
+function resetForm() {
+  document.getElementById("myForm").reset();
 }
