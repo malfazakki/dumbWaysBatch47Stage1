@@ -34,17 +34,19 @@ function addProject(event) {
     : "";
 
   image = URL.createObjectURL(image[0]);
-  const selesai = moment(startDate);
-  const mulai = moment(endDate);
-  const daysDuration = mulai.diff(selesai, "days");
-  const monthsDuration = mulai.diff(selesai, "months");
-  const yearsDuration = mulai.diff(selesai, "years");
+
+  // Menghitung Durasi dengan MomentJs
+  const mulai = moment(startDate);
+  const selesai = moment(endDate);
+  const daysDuration = selesai.diff(mulai, "days");
+  const monthsDuration = selesai.diff(mulai, "months");
+  const yearsDuration = selesai.diff(mulai, "years");
   let duration;
 
   if (yearsDuration > 0) {
-    duration = `duration: ${yearsDuration} years;`;
+    duration = `duration: ${yearsDuration} years, ${monthsDuration} months ${daysDuration} days;`;
   } else if (monthsDuration > 0) {
-    duration = `duration: ${monthsDuration} months`;
+    duration = `duration: ${monthsDuration} months, ${daysDuration} days`;
   } else if (daysDuration > 0) {
     duration = `duration: ${daysDuration} days`;
   } else {
