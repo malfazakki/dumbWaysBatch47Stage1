@@ -1,0 +1,61 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  margin-top: 8vh;
+}
+
+section {
+  height: 92vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 100px;
+  gap: 50px;
+}
+
+.judul-testimonial {
+  font-size: 36px;
+}
+
+.card-container {
+  width: 90%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 350px));
+  justify-content: center;
+  column-gap: 30px;
+  row-gap: 30px;
+}
+
+.card {
+  margin: 0 auto;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  padding: 20px;
+}
+
+.card img {
+  width: 100%;
+}
+
+.quote {
+  font-size: 15px;
+  font-style: italic;
+  line-height: 1.7;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: left;
+  padding: 5px;
+}
+
+.author {
+  text-align: right;
+  font-size: 12 px;
+}
