@@ -15,7 +15,7 @@ function addProject(event) {
   }
 
   // Untuk Icon Techstack
-  let nodeChecked = document.getElementById("nodeJs").checked ? nodeIcon : "";
+  let nodeChecked = document.getElementById("nodeJs").checked ? '<i class="fa-brands fa-node-js fa-xl"></i>' : "";
   let reactChecked = document.getElementById("react").checked ? '<i class="fa-brands fa-react fa-xl"></i>' : "";
   let bootstrapChecked = document.getElementById("bootstrap").checked
     ? '<i class="fa-brands fa-bootstrap fa-xl"></i>'
