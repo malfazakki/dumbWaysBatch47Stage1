@@ -13,25 +13,26 @@ body {
 }
 
 section {
-  height: 92vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 100px;
+  padding-bottom: 80px;
 }
 
 .card-container {
-  width: 90%;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 350px));
+  display: flex;
   justify-content: center;
   column-gap: 30px;
   row-gap: 30px;
+  flex-wrap: wrap;
+  width: 90%;
 }
 
 .card {
-  margin: 0 auto;
+  margin: 0;
+  width: 350px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
   padding: 20px;
   display: flex;
