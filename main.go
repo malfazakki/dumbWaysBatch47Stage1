@@ -16,6 +16,10 @@ type Project struct {
 	StartDate string
 	EndDate string
 	Duration string
+	NodeJs string
+	React string
+	Bootstrap string
+	Laravel string
 }
 
 var dataProject = []Project {
@@ -25,6 +29,7 @@ var dataProject = []Project {
 		StartDate: "2023/07/01",
 		EndDate: "2023/07/06",  
 		Duration: "3 months",
+		NodeJs: "<i class='fa-brands fa-node-js fa-xl'></i>",
 	},
 	{
 		Title: "Dumbways Web Apps 2023",
@@ -171,6 +176,22 @@ func AddProject(c echo.Context) error {
 	endDate := c.FormValue("input-date-end")
 	content := c.FormValue("input-deskripsi")
 	duration := calculateDuration(startDate, endDate)
+	nodeJs := c.FormValue("node-js")
+	react := c.FormValue("react")
+	bootstrap := c.FormValue("bootstrap")
+
+	if nodeJs != "" {
+		nodeJs = "<i class='fa-brands fa-node-js fa-xl'></i>"
+	}
+	if react != "" {
+		react = "<i class='fa-brands fa-react fa-xl''>"
+	}
+	if bootstrap != "" {
+		bootstrap = "<i class='fa-brands fa-bootstrap fa-xl'></i>"
+	}
+	if nodeJs != "" {
+		nodeJs = "<i class='fa-brands fa-node-js fa-xl'></i>"
+	}
 
 	fmt.Println("Title :", title)
 	fmt.Println("Duration :", duration)
@@ -182,6 +203,7 @@ func AddProject(c echo.Context) error {
 		StartDate: startDate,
 		EndDate: endDate,
 		Duration: duration,
+		NodeJs: nodeJs,
 	}
 
 	dataProject = append(dataProject, newProject)
