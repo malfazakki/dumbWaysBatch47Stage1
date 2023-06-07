@@ -42,18 +42,18 @@ func main() {
 
 	// routing
 	//get
-	e.GET("/", home)
-	e.GET("/contact", contact)
-	e.GET("/add-project", addProject)
-	e.GET("/testimonial", testimonial)
-	e.GET("/project-detail/:id", projectDetail)
+	e.GET("/", homePage)
+	e.GET("/contact", contactPage)
+	e.GET("/add-project", addProjectPage)
+	e.GET("/testimonial", testimonialPage)
+	e.GET("/project-detail/:id", projectDetailPage)
 	//post
-	e.POST("/add-project", formAddProject)
+	e.POST("/add-project", AddProject)
 	e.POST("/project-delete/:id", deleteProject)
 	e.Logger.Fatal(e.Start("localhost:5000"))
 }
 
-func home(c echo.Context) error {
+func homePage(c echo.Context) error {
 	var tmpl, err = template.ParseFiles("views/index.html")
 
 	if err != nil {
@@ -67,7 +67,7 @@ func home(c echo.Context) error {
 	return tmpl.Execute(c.Response(), projects)
 }
 
-func contact(c echo.Context) error {
+func contactPage(c echo.Context) error {
 	var tmpl, err = template.ParseFiles("views/contact.html")
 
 	if err != nil {
@@ -77,7 +77,7 @@ func contact(c echo.Context) error {
 	return tmpl.Execute(c.Response(), nil)
 }
 
-func addProject(c echo.Context) error {
+func addProjectPage(c echo.Context) error {
 	var tmpl, err = template.ParseFiles("views/add-project.html")
 
 	if err != nil {
@@ -87,7 +87,7 @@ func addProject(c echo.Context) error {
 	return tmpl.Execute(c.Response(), nil)
 }
 
-func testimonial(c echo.Context) error {
+func testimonialPage(c echo.Context) error {
 	var tmpl, err = template.ParseFiles("views/testimonial.html")
 
 	if err != nil {
@@ -97,7 +97,7 @@ func testimonial(c echo.Context) error {
 	return tmpl.Execute(c.Response(), nil)
 }
 
-func projectDetail(c echo.Context) error {
+func projectDetailPage(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
 	var ProjectDetail = Project{}
@@ -126,7 +126,46 @@ func projectDetail(c echo.Context) error {
 	return tmpl.Execute(c.Response(), data)
 }
 
-func formAddProject(c echo.Context) error {
+func calculateDuration(startDate, endDate string) string {
+	startTime, _ := time.Parse("2006-01-02", startDate)
+	endTime, _ := time.Parse("2006-01-02", endDate)
+
+	durationTime := int(endTime.Sub(startTime).Hours())
+	durationDays := durationTime / 24
+	durationWeeks := durationDays / 7
+	durationMonths := durationWeeks / 4
+	durationYears := durationMonths / 12
+
+	var duration string
+
+	if durationYears > 1 {
+		duration = strconv.Itoa(durationYears) + " years"
+	} else if durationYears > 0 {
+		duration = strconv.Itoa(durationYears) + " year"
+	} else {
+		if durationMonths > 1 {
+			duration = strconv.Itoa(durationMonths) + " months"
+		} else if durationMonths > 0 {
+			duration = strconv.Itoa(durationMonths) + " month"
+		} else {
+			if durationWeeks > 1 {
+				duration = strconv.Itoa(durationWeeks) + " weeks"
+			} else if durationWeeks > 0 {
+				duration = strconv.Itoa(durationWeeks) + " week"
+			} else {
+				if durationDays > 1 {
+					duration = strconv.Itoa(durationDays) + " days"
+				} else {
+					duration = strconv.Itoa(durationDays) + " day"
+				}
+			}
+		}
+	}
+
+	return duration
+}
+
+func AddProject(c echo.Context) error {
 	title := c.FormValue("input-project-name")
 	startDate := c.FormValue("input-date-start")
 	endDate := c.FormValue("input-date-end")
@@ -134,21 +173,8 @@ func formAddProject(c echo.Context) error {
 	duration := calculateDuration(startDate, endDate)
 
 	fmt.Println("Title :", title)
-	fmt.Println("Start Date :", startDate)
-	fmt.Println("End Date :", endDate)
+	fmt.Println("Duration :", duration)
 	fmt.Println("Content :", content)
-
-	// Menampilkan durasi
-	switch {
-	case duration >= 365:
-		duration /= 365
-	case duration >= 30:
-		duration /= 30
-	case duration >= 7:
-		duration /= 7
-	default:
-		duration /= 1
-	}
 
 	var newProject = Project{
 		Title: title,
@@ -163,17 +189,6 @@ func formAddProject(c echo.Context) error {
 	fmt.Println(dataProject)
 	
 	return c.Redirect(http.StatusMovedPermanently, "/")
-}
-
-func calculateDuration(startDate, endDate string) int {
-	// Mengubah string tanggal menjadi tipe time.Time
-	startTime, _ := time.Parse("02-01-2006", startDate)
-	endTime, _ := time.Parse("02-01-2006", endDate)
-
-	// Menghitung durasi antara dua tanggal
-	duration := int(endTime.Sub(startTime).Hours() / 24)
-
-	return duration
 }
 
 func deleteProject(c echo.Context) error {
