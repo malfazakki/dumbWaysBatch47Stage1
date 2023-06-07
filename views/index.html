@@ -91,16 +91,14 @@
         <h1 class="fw-bold mb-5">My Project</h1>
         <div class="row row-cols-1 row-cols-lg-3 gap-4 pb-5 px-2 px-sm-0 justify-content-center">
 
+          {{range $index, $data := .Projects}}
           <!-- card start -->
           <div class="card col card-project px-0" style="width: 20rem">
             <img src="public/images/article1.jpg" class="card-img-top" alt="...">
             <div class="card-body">
-              <h5 class="card-title">Dumbways Web App - 2023</h5>
-              <p class="duration-text">Duration: 3 months</p>
-              <p class="card-text mb-3">Some quick example text to build on the card title and make up the bulk of the
-                card's
-                content.
-              </p>
+              <h5 class="card-title">{{$data.Title}}</h5>
+              <p class="duration-text">duration: {{$data.Duration}}</p>
+              <p class="card-text mb-3">{{$data.Content}}</p>
 
               <!-- div tech stack image -->
               <div class="tech-images mb-4">
@@ -112,72 +110,19 @@
               <!-- div tech stack image end -->
 
               <!-- div button card -->
-              <div class="button-card d-flex justify-content-between column-gap-3">
+              <div class="button-card d-flex justify-content-between gap-3">
                 <a href="#" class="btn btn-primary w-50">Edit</a>
-                <a href="#" class="btn btn-outline-danger w-50">Delete</a>
+                <form action="/project-delete/{{$index}}" method="post" class="w-50">
+                  <input type="submit" class="btn btn-outline-danger w-100" value="Delete Post"
+                    style="cursor: pointer;">
+                </form>
+
               </div>
               <!-- div button card end -->
             </div>
           </div>
           <!-- card end -->
-          <!-- card start -->
-          <div class="card col card-project px-0" style="width: 20rem">
-            <img src="public/images/article2.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Dumbways Web App - 2023</h5>
-              <p class="duration-text">Duration: 3 months</p>
-              <p class="card-text mb-3">Some quick example text to build on the card title and make up the bulk of the
-                card's
-                content.
-              </p>
-
-              <!-- div tech stack image -->
-              <div class="tech-images mb-4">
-                <i class="fa-brands fa-node-js fa-xl"></i>
-                <i class="fa-brands fa-bootstrap fa-xl"></i>
-                <i class="fa-brands fa-react fa-xl"></i>
-                <i class="fa-brands fa-laravel fa-xl"></i>
-              </div>
-              <!-- div tech stack image end -->
-
-              <!-- div button card -->
-              <div class="button-card d-flex justify-content-between column-gap-3">
-                <a href="#" class="btn btn-primary w-50">Edit</a>
-                <a href="#" class="btn btn-outline-danger w-50">Delete</a>
-              </div>
-              <!-- div button card end -->
-            </div>
-          </div>
-          <!-- card end -->
-          <!-- card start -->
-          <div class="card col card-project px-0" style="width: 20rem">
-            <img src="public/images/article3.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Dumbways Web App - 2023</h5>
-              <p class="duration-text">Duration: 3 months</p>
-              <p class="card-text mb-3">Some quick example text to build on the card title and make up the bulk of the
-                card's
-                content.
-              </p>
-
-              <!-- div tech stack image -->
-              <div class="tech-images mb-4">
-                <i class="fa-brands fa-node-js fa-xl"></i>
-                <i class="fa-brands fa-bootstrap fa-xl"></i>
-                <i class="fa-brands fa-react fa-xl"></i>
-                <i class="fa-brands fa-laravel fa-xl"></i>
-              </div>
-              <!-- div tech stack image end -->
-
-              <!-- div button card -->
-              <div class="button-card d-flex justify-content-between column-gap-3">
-                <a href="#" class="btn btn-primary w-50">Edit</a>
-                <a href="#" class="btn btn-outline-danger w-50">Delete</a>
-              </div>
-              <!-- div button card end -->
-            </div>
-          </div>
-          <!-- card end -->
+          {{end}}
 
         </div>
       </div>
