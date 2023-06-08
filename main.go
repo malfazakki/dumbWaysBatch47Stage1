@@ -11,6 +11,7 @@ import (
 )
 
 type Project struct {
+	Id int
 	Title string
 	Content string
 	StartDate string
@@ -45,6 +46,15 @@ var dataProject = []Project {
 		Bootstrap: "<i class=\"fa-brands fa-bootstrap fa-xl\"></i>",
 		Laravel: "<i class=\"fa-brands fa-laravel fa-xl\"></i>",
 	},
+	{
+		Title: "Dumbways Web Apps 2023",
+		Content: "Content 3",
+		StartDate: "2023-05-08",
+		EndDate: "2023-06-08",
+		Duration: "1 month",
+		NodeJs: "<i class=\"fa-brands fa-node-js fa-xl\"></i>",
+		React: "<i class=\"fa-brands fa-react fa-xl\"></i>",
+	},
 }
  
 func main() {
@@ -63,7 +73,7 @@ func main() {
 	//post
 	e.POST("/add-project", AddProject)
 	e.POST("/project-delete/:id", deleteProject)
-	e.POST("/update-project", updateProject)
+	e.POST("/update-project/:id", updateProject)
 	e.Logger.Fatal(e.Start("localhost:5000"))
 }
 
@@ -154,6 +164,7 @@ func updateProjectPage(c echo.Context) error {
 	for i, data := range dataProject {
 		if id == i {
 			ProjectDetail = Project{
+				Id: id,
 				Title: data.Title,
 				Content: data.Content,
 				StartDate: data.StartDate,

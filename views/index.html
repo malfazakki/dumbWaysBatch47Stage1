@@ -99,10 +99,10 @@
               <h5 class="card-title"><a class="link-nav" href="project-detail/{{$index}}"
                   target="_blank">{{$data.Title}}</a></h5>
               <p class="duration-text">duration: {{$data.Duration}}</p>
-              <p class="card-text mb-3">{{$data.Content}}</p>
+              <p class="card-text mb-3" style="height:50px; overflow:hidden;">{{$data.Content}}</p>
 
               <!-- div tech stack image -->
-              <div class="tech-images mb-4">
+              <div class="tech-images mb-4" style="height: 25px;">
                 {{$data.NodeJs}}
                 {{$data.React}}
                 {{$data.Bootstrap}}

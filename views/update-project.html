@@ -55,7 +55,7 @@
 
           <h2 class="fw-bold text-center mt-5">Update Project</h2>
 
-          <form action="/update-project" method="POST">
+          <form action="/update-project/{{.Project.Id}}" method="POST">
             <input type="hidden" name="id" value="">
             <!-- Project Name -->
             <div class="mb-3">
