@@ -26,17 +26,24 @@ var dataProject = []Project {
 	{
 		Title: "Dumbways Web Apps 2023",
 		Content: "Content",
-		StartDate: "2023/07/01",
-		EndDate: "2023/07/06",  
-		Duration: "3 months",
-		NodeJs: "<i class='fa-brands fa-node-js fa-xl'></i>",
+		StartDate: "2023-05-08",
+		EndDate: "2023-06-08",
+		Duration: "1 month",
+		NodeJs: "<i class=\"fa-brands fa-node-js fa-xl\"></i>",
+		React: "<i class=\"fa-brands fa-react fa-xl\"></i>",
+		Bootstrap: "<i class=\"fa-brands fa-bootstrap fa-xl\"></i>",
+		Laravel: "<i class=\"fa-brands fa-laravel fa-xl\"></i>",
 	},
 	{
 		Title: "Dumbways Web Apps 2023",
 		Content: "Content 2",
-		StartDate: "2023/07/01",
-		EndDate: "2023/07/06",
-		Duration: "3 months",
+		StartDate: "2023-05-08",
+		EndDate: "2023-06-08",
+		Duration: "1 month",
+		NodeJs: "<i class=\"fa-brands fa-node-js fa-xl\"></i>",
+		React: "<i class=\"fa-brands fa-react fa-xl\"></i>",
+		Bootstrap: "<i class=\"fa-brands fa-bootstrap fa-xl\"></i>",
+		Laravel: "<i class=\"fa-brands fa-laravel fa-xl\"></i>",
 	},
 }
  
@@ -52,9 +59,11 @@ func main() {
 	e.GET("/add-project", addProjectPage)
 	e.GET("/testimonial", testimonialPage)
 	e.GET("/project-detail/:id", projectDetailPage)
+	e.GET("/update-project/:id", updateProjectPage)
 	//post
 	e.POST("/add-project", AddProject)
 	e.POST("/project-delete/:id", deleteProject)
+	e.POST("/update-project", updateProject)
 	e.Logger.Fatal(e.Start("localhost:5000"))
 }
 
@@ -100,6 +109,7 @@ func testimonialPage(c echo.Context) error {
 	}
 
 	return tmpl.Execute(c.Response(), nil)
+
 }
 
 func projectDetailPage(c echo.Context) error {
@@ -114,6 +124,11 @@ func projectDetailPage(c echo.Context) error {
 				Content: data.Content,
 				StartDate: data.StartDate,
 				EndDate: data.EndDate,
+				Duration: data.Duration,
+				NodeJs: data.NodeJs,
+				React: data.React,
+				Bootstrap: data.Bootstrap,
+				Laravel: data.Laravel,
 			}
 		}
 	}
@@ -130,6 +145,42 @@ func projectDetailPage(c echo.Context) error {
 
 	return tmpl.Execute(c.Response(), data)
 }
+
+func updateProjectPage(c echo.Context) error {
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	var ProjectDetail = Project{}
+
+	for i, data := range dataProject {
+		if id == i {
+			ProjectDetail = Project{
+				Title: data.Title,
+				Content: data.Content,
+				StartDate: data.StartDate,
+				EndDate: data.EndDate,
+				Duration: data.Duration,
+				NodeJs: data.NodeJs,
+				React: data.React,
+				Bootstrap: data.Bootstrap,
+				Laravel: data.Laravel,
+			}
+		}
+	}
+
+	data := map[string]interface{} {
+		"Project": ProjectDetail,
+	}
+
+	var tmpl, err = template.ParseFiles("views/update-project.html")
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
+	}
+
+	return tmpl.Execute(c.Response(), data)
+}
+
+
 
 func calculateDuration(startDate, endDate string) string {
 	startTime, _ := time.Parse("2006-01-02", startDate)
@@ -179,23 +230,28 @@ func AddProject(c echo.Context) error {
 	nodeJs := c.FormValue("node-js")
 	react := c.FormValue("react")
 	bootstrap := c.FormValue("bootstrap")
+	laravel := c.FormValue("laravel")
 
 	if nodeJs != "" {
-		nodeJs = "<i class='fa-brands fa-node-js fa-xl'></i>"
+		nodeJs = "<i class=\"fa-brands fa-node-js fa-xl\"></i>"
 	}
 	if react != "" {
-		react = "<i class='fa-brands fa-react fa-xl''>"
-	}
+		react = "<i class=\"fa-brands fa-react fa-xl\">"
+	} 
 	if bootstrap != "" {
-		bootstrap = "<i class='fa-brands fa-bootstrap fa-xl'></i>"
-	}
-	if nodeJs != "" {
-		nodeJs = "<i class='fa-brands fa-node-js fa-xl'></i>"
-	}
+		bootstrap = "<i class=\"fa-brands fa-bootstrap fa-xl\"></i>"
+	} 
+	if laravel != "" {
+		laravel = "<i class=\"fa-brands fa-node-js fa-xl\"></i>"
+	} 
 
 	fmt.Println("Title :", title)
 	fmt.Println("Duration :", duration)
 	fmt.Println("Content :", content)
+	fmt.Println(nodeJs)
+	fmt.Println(react)
+	fmt.Println(bootstrap)
+	fmt.Println(laravel)
 
 	var newProject = Project{
 		Title: title,
@@ -204,13 +260,16 @@ func AddProject(c echo.Context) error {
 		EndDate: endDate,
 		Duration: duration,
 		NodeJs: nodeJs,
+		React: react,
+		Bootstrap: bootstrap,
+		Laravel: laravel,
 	}
 
 	dataProject = append(dataProject, newProject)
 
 	fmt.Println(dataProject)
 	
-	return c.Redirect(http.StatusMovedPermanently, "/")
+	return c.Redirect(http.StatusMovedPermanently, "/#my-project")
 }
 
 func deleteProject(c echo.Context) error {
@@ -220,5 +279,44 @@ func deleteProject(c echo.Context) error {
 
 	dataProject = append(dataProject[:id], dataProject[id+1:]...)
 
-	return c.Redirect(http.StatusMovedPermanently, "/")
+	return c.Redirect(http.StatusMovedPermanently, "/#my-project")
+}
+
+func updateProject(c echo.Context) error {
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	fmt.Println("Index :", id)
+
+	title := c.FormValue("input-project-name")
+	startDate := c.FormValue("input-date-start")
+	endDate := c.FormValue("input-date-end")
+	content := c.FormValue("input-deskripsi")
+	duration := calculateDuration(startDate, endDate)
+	nodeJs := c.FormValue("node-js")
+	react := c.FormValue("react")
+	bootstrap := c.FormValue("bootstrap")
+	laravel := c.FormValue("laravel")
+
+	if nodeJs != "" {
+		nodeJs = "<i class=\"fa-brands fa-node-js fa-xl\"></i>"
+	}
+	if react != "" {
+		react = "<i class=\"fa-brands fa-react fa-xl\"></i>"
+	} 
+	if bootstrap != "" {
+		bootstrap = "<i class=\"fa-brands fa-bootstrap fa-xl\"></i>"
+	} 
+	if laravel != "" {
+		laravel = "<i class=\"fa-brands fa-node-js fa-xl\"></i>"
+	} 
+		
+		dataProject[id].Title = title
+		dataProject[id].Content = content
+		dataProject[id].Duration = duration
+		dataProject[id].NodeJs = nodeJs
+		dataProject[id].React = react
+		dataProject[id].Bootstrap = bootstrap
+		dataProject[id].Laravel = laravel
+
+	return c.Redirect(http.StatusMovedPermanently, "/#my-project")
 }

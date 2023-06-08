@@ -88,7 +88,7 @@
 
     <section class="project pt-5 pb-3 px-3 px-sm-0">
       <div class="container mt-5 d-flex flex-column align-items-center justify-content-center">
-        <h1 class="fw-bold mb-5">My Project</h1>
+        <h1 class="fw-bold mb-5" id="my-project">My Project</h1>
         <div class="row row-cols-1 row-cols-lg-3 gap-4 pb-5 px-2 px-sm-0 justify-content-center">
 
           {{range $index, $data := .Projects}}
@@ -96,22 +96,23 @@
           <div class="card col card-project px-0" style="width: 20rem">
             <img src="public/images/article1.jpg" class="card-img-top" alt="...">
             <div class="card-body">
-              <h5 class="card-title">{{$data.Title}}</h5>
+              <h5 class="card-title"><a class="link-nav" href="project-detail/{{$index}}"
+                  target="_blank">{{$data.Title}}</a></h5>
               <p class="duration-text">duration: {{$data.Duration}}</p>
               <p class="card-text mb-3">{{$data.Content}}</p>
 
               <!-- div tech stack image -->
               <div class="tech-images mb-4">
-                <i class="fa-brands fa-node-js fa-xl"></i>
-                <i class="fa-brands fa-bootstrap fa-xl"></i>
-                <i class="fa-brands fa-react fa-xl"></i>
-                <i class="fa-brands fa-laravel fa-xl"></i>
+                {{$data.NodeJs}}
+                {{$data.React}}
+                {{$data.Bootstrap}}
+                {{$data.Laravel}}
               </div>
               <!-- div tech stack image end -->
 
               <!-- div button card -->
               <div class="button-card d-flex justify-content-between gap-3">
-                <a href="#" class="btn btn-primary w-50">Edit</a>
+                <a href="update-project/{{$index}}" class="btn btn-primary w-50" target="_blank">Edit</a>
                 <form action="/project-delete/{{$index}}" method="post" class="w-50">
                   <input type="submit" class="btn btn-outline-danger w-100" value="Delete Post"
                     style="cursor: pointer;">
