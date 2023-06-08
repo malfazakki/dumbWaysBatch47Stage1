@@ -96,23 +96,30 @@
           <div class="card col card-project px-0" style="width: 20rem">
             <img src="public/images/article1.jpg" class="card-img-top" alt="...">
             <div class="card-body">
-              <h5 class="card-title"><a class="link-nav" href="project-detail/{{$index}}"
-                  target="_blank">{{$data.Title}}</a></h5>
+              <h5 class="card-title"><a class="link-nav" href="project-detail/{{$index}}">{{$data.Title}}</a></h5>
               <p class="duration-text">duration: {{$data.Duration}}</p>
               <p class="card-text mb-3" style="height:50px; overflow:hidden;">{{$data.Content}}</p>
 
               <!-- div tech stack image -->
               <div class="tech-images mb-4" style="height: 25px;">
-                {{$data.NodeJs}}
-                {{$data.React}}
-                {{$data.Bootstrap}}
-                {{$data.Laravel}}
+                {{if $data.NodeJs}}
+                <i class="fa-brands fa-node-js fa-xl"></i>
+                {{end}}
+                {{if $data.React}}
+                <i class="fa-brands fa-bootstrap fa-xl"></i>
+                {{end}}
+                {{if $data.Bootstrap}}
+                <i class="fa-brands fa-react fa-xl"></i>
+                {{end}}
+                {{if $data.Laravel}}
+                <i class="fa-brands fa-laravel fa-xl"></i>
+                {{end}}
               </div>
               <!-- div tech stack image end -->
 
               <!-- div button card -->
               <div class="button-card d-flex justify-content-between gap-3">
-                <a href="update-project/{{$index}}" class="btn btn-primary w-50" target="_blank">Edit</a>
+                <a href="update-project/{{$index}}" class="btn btn-primary w-50">Edit</a>
                 <form action="/project-delete/{{$index}}" method="post" class="w-50">
                   <input type="submit" class="btn btn-outline-danger w-100" value="Delete Post"
                     style="cursor: pointer;">

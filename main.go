@@ -17,10 +17,10 @@ type Project struct {
 	StartDate string
 	EndDate string
 	Duration string
-	NodeJs string
-	React string
-	Bootstrap string
-	Laravel string
+	NodeJs bool
+	React bool
+	Bootstrap bool
+	Laravel bool
 }
 
 var dataProject = []Project {
@@ -30,10 +30,10 @@ var dataProject = []Project {
 		StartDate: "2023-05-08",
 		EndDate: "2023-06-08",
 		Duration: "1 month",
-		NodeJs: "<i class=\"fa-brands fa-node-js fa-xl\"></i>",
-		React: "<i class=\"fa-brands fa-react fa-xl\"></i>",
-		Bootstrap: "<i class=\"fa-brands fa-bootstrap fa-xl\"></i>",
-		Laravel: "<i class=\"fa-brands fa-laravel fa-xl\"></i>",
+		NodeJs: true,
+		React: true,
+		Bootstrap: true,
+		Laravel: true,
 	},
 	{
 		Title: "Dumbways Web Apps 2023",
@@ -41,10 +41,10 @@ var dataProject = []Project {
 		StartDate: "2023-05-08",
 		EndDate: "2023-06-08",
 		Duration: "1 month",
-		NodeJs: "<i class=\"fa-brands fa-node-js fa-xl\"></i>",
-		React: "<i class=\"fa-brands fa-react fa-xl\"></i>",
-		Bootstrap: "<i class=\"fa-brands fa-bootstrap fa-xl\"></i>",
-		Laravel: "<i class=\"fa-brands fa-laravel fa-xl\"></i>",
+		NodeJs: true,
+		React: true,
+		Bootstrap: true,
+		Laravel: true,
 	},
 	{
 		Title: "Dumbways Web Apps 2023",
@@ -52,8 +52,10 @@ var dataProject = []Project {
 		StartDate: "2023-05-08",
 		EndDate: "2023-06-08",
 		Duration: "1 month",
-		NodeJs: "<i class=\"fa-brands fa-node-js fa-xl\"></i>",
-		React: "<i class=\"fa-brands fa-react fa-xl\"></i>",
+		NodeJs: true,
+		React: true,
+		Bootstrap: false,
+		Laravel: false,
 	},
 }
  
@@ -243,18 +245,6 @@ func AddProject(c echo.Context) error {
 	bootstrap := c.FormValue("bootstrap")
 	laravel := c.FormValue("laravel")
 
-	if nodeJs != "" {
-		nodeJs = "<i class=\"fa-brands fa-node-js fa-xl\"></i>"
-	}
-	if react != "" {
-		react = "<i class=\"fa-brands fa-react fa-xl\"></i>"
-	} 
-	if bootstrap != "" {
-		bootstrap = "<i class=\"fa-brands fa-bootstrap fa-xl\"></i>"
-	} 
-	if laravel != "" {
-		laravel = "<i class=\"fa-brands fa-node-js fa-xl\"></i>"
-	} 
 
 	fmt.Println("Title :", title)
 	fmt.Println("Duration :", duration)
@@ -270,10 +260,10 @@ func AddProject(c echo.Context) error {
 		StartDate: startDate,
 		EndDate: endDate,
 		Duration: duration,
-		NodeJs: nodeJs,
-		React: react,
-		Bootstrap: bootstrap,
-		Laravel: laravel,
+		NodeJs: (nodeJs == "nodeJs"),
+		React: (react == "react"),
+		Bootstrap: (bootstrap == "bootstrap"),
+		Laravel: (laravel == "laravel"),
 	}
 
 	dataProject = append(dataProject, newProject)
@@ -308,26 +298,20 @@ func updateProject(c echo.Context) error {
 	bootstrap := c.FormValue("bootstrap")
 	laravel := c.FormValue("laravel")
 
-	if nodeJs != "" {
-		nodeJs = "<i class=\"fa-brands fa-node-js fa-xl\"></i>"
+
+	var updateProject = Project{
+		Title: title,
+		Content: content,
+		StartDate: startDate,
+		EndDate: endDate,
+		Duration: duration,
+		NodeJs: (nodeJs == "nodeJs"),
+		React: (react == "react"),
+		Bootstrap: (bootstrap == "bootstrap"),
+		Laravel: (laravel == "laravel"),
 	}
-	if react != "" {
-		react = "<i class=\"fa-brands fa-react fa-xl\"></i>"
-	} 
-	if bootstrap != "" {
-		bootstrap = "<i class=\"fa-brands fa-bootstrap fa-xl\"></i>"
-	} 
-	if laravel != "" {
-		laravel = "<i class=\"fa-brands fa-node-js fa-xl\"></i>"
-	} 
-		
-		dataProject[id].Title = title
-		dataProject[id].Content = content
-		dataProject[id].Duration = duration
-		dataProject[id].NodeJs = nodeJs
-		dataProject[id].React = react
-		dataProject[id].Bootstrap = bootstrap
-		dataProject[id].Laravel = laravel
+
+	dataProject[id] = updateProject
 
 	return c.Redirect(http.StatusMovedPermanently, "/#my-project")
 }

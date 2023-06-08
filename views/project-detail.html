@@ -75,12 +75,35 @@
         </div>
 
         <div class="deskripsi-bawah">
-          <p class="fw-bold mb-4">Technologies</p>
-          <div class="d-flex gap-3">
-            {{.Project.NodeJs}}
-            {{.Project.React}}
-            {{.Project.Bootstrap}}
-            {{.Project.Laravel}}
+          <p class="fw-bold mb-2">Technologies</p>
+          <div class="d-flex flex-wrap align-items-center row-gap-3">
+            {{if .Project.NodeJs}}
+            <div class="col-5 flex-shrink-0 d-flex align-items-center">
+              <i class="fa-brands fa-node-js fa-xl me-1"></i>
+              <label>Node Js</label>
+            </div>
+            {{end}}
+
+            {{if .Project.React }}
+            <div class="col-5 flex-shrink-0 d-flex align-items-center">
+              <i class="fa-brands fa-react fa-xl me-1"></i>
+              <label>React</label>
+            </div>
+            {{end}}
+
+            {{if .Project.Bootstrap}}
+            <div class="col-5 flex-shrink-0 d-flex align-items-center">
+              <i class="fa-brands fa-bootstrap fa-xl me-1 me-1"></i>
+              <label>Bootstrap</label>
+            </div>
+            {{end}}
+
+            {{if .Project.Laravel}}
+            <div class="col-5 flex-shrink-0 d-flex align-items-center">
+              <i class=" fa-brands fa-laravel fa-xl me-1"></i>
+              <label>Laravel</label>
+            </div>
+            {{end}}
           </div>
         </div>
       </div>

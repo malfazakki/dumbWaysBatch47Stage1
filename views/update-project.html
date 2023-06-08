@@ -96,13 +96,15 @@
             <div class="row">
               <div class="col-md-6 col-6">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="node-js" id="node-js">
+                  <input class="form-check-input" type="checkbox" value="nodeJs" name="node-js" id="node-js" {{if
+                    .Project.NodeJs}} checked {{end}}>
                   <label class="form-check-label" for="node-js">
                     Node Js
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="bootstrap" id="bootstrap">
+                  <input class="form-check-input" type="checkbox" value="bootstrap" name="bootstrap" id="bootstrap" {{if
+                    .Project.Bootstrap}} checked {{end}}>
                   <label class="form-check-label" for="bootstrap">
                     Bootstrap
                   </label>
@@ -110,13 +112,15 @@
               </div>
               <div class="col-md-6 col-6">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="react" name="react" id="react">
+                  <input class="form-check-input" type="checkbox" value="react" name="react" id="react" {{if
+                    .Project.React}} checked {{end}}>
                   <label class="form-check-label" for="react">
                     React
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="laravel" name="laravel" id="laravel">
+                  <input class="form-check-input" type="checkbox" value="laravel" name="laravel" id="laravel" {{if
+                    .Project.Laravel}} checked {{end}}>
                   <label class="form-check-label" for="laravel">
                     Laravel
                   </label>
