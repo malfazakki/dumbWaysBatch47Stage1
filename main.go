@@ -236,7 +236,7 @@ func AddProject(c echo.Context) error {
 		nodeJs = "<i class=\"fa-brands fa-node-js fa-xl\"></i>"
 	}
 	if react != "" {
-		react = "<i class=\"fa-brands fa-react fa-xl\">"
+		react = "<i class=\"fa-brands fa-react fa-xl\"></i>"
 	} 
 	if bootstrap != "" {
 		bootstrap = "<i class=\"fa-brands fa-bootstrap fa-xl\"></i>"
