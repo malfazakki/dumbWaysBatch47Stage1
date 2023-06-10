@@ -96,9 +96,9 @@
           <div class="card col card-project px-0" style="width: 20rem">
             <img src="public/images/article1.jpg" class="card-img-top" alt="...">
             <div class="card-body">
-              <h5 class="card-title"><a class="link-nav" href="project-detail/{{$index}}">{{$data.Title}}</a></h5>
+              <h5 class="card-title"><a class="link-nav" href="project-detail/{{$data.Id}}">{{$data.Title}}</a></h5>
               <p class="duration-text">duration: {{$data.Duration}}</p>
-              <p class="card-text mb-3" style="height:50px; overflow:hidden;">{{$data.Content}}</p>
+              <p class="card-text mb-3" style="height:50px; overflow:hidden;">{{$data.Description}}</p>
 
               <!-- div tech stack image -->
               <div class="tech-images mb-4" style="height: 25px;">
@@ -119,8 +119,8 @@
 
               <!-- div button card -->
               <div class="button-card d-flex justify-content-between gap-3">
-                <a href="update-project/{{$index}}" class="btn btn-primary w-50">Edit</a>
-                <form action="/project-delete/{{$index}}" method="post" class="w-50">
+                <a href="update-project/{{$data.Id}}" class="btn btn-primary w-50">Edit</a>
+                <form action="/project-delete/{{$data.Id}}" method="post" class="w-50">
                   <input type="submit" class="btn btn-outline-danger w-100" value="Delete Post"
                     style="cursor: pointer;">
                 </form>

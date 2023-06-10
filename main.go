@@ -1,7 +1,9 @@
 package main
 
 import (
+	"context"
 	"fmt"
+	"main/connection"
 	"net/http"
 	"strconv"
 	"text/template"
@@ -13,53 +15,23 @@ import (
 type Project struct {
 	Id int
 	Title string
-	Content string
+	Description string
 	StartDate string
+	StartTime time.Time
+	EndTime time.Time
 	EndDate string
 	Duration string
 	NodeJs bool
 	React bool
 	Bootstrap bool
 	Laravel bool
+	Image string
 }
 
-var dataProject = []Project {
-	{
-		Title: "Dumbways Web Apps 2023",
-		Content: "Content",
-		StartDate: "2023-05-08",
-		EndDate: "2023-06-08",
-		Duration: "1 month",
-		NodeJs: true,
-		React: true,
-		Bootstrap: true,
-		Laravel: true,
-	},
-	{
-		Title: "Dumbways Web Apps 2023",
-		Content: "Content 2",
-		StartDate: "2023-05-08",
-		EndDate: "2023-06-08",
-		Duration: "1 month",
-		NodeJs: true,
-		React: true,
-		Bootstrap: true,
-		Laravel: true,
-	},
-	{
-		Title: "Dumbways Web Apps 2023",
-		Content: "Content 3",
-		StartDate: "2023-05-08",
-		EndDate: "2023-06-08",
-		Duration: "1 month",
-		NodeJs: true,
-		React: true,
-		Bootstrap: false,
-		Laravel: false,
-	},
-}
  
 func main() {
+	connection.DatabaseConnect()
+
 	e := echo.New()
 
 	e.Static("/public", "public")
@@ -80,14 +52,29 @@ func main() {
 }
 
 func homePage(c echo.Context) error {
+	data, _ := connection.Conn.Query(context.Background(), "SELECT id, title, description, start_date, end_date, duration, node_js, react, bootstrap, laravel, image FROM tb_project ORDER BY id ASC")
+
+	var result []Project
+	for data.Next() {
+		var each = Project{}
+		
+		err := data.Scan(&each.Id, &each.Title, &each.Description, &each.StartDate, &each.EndDate, &each.Duration, &each.NodeJs, &each.React, &each.Bootstrap, &each.Laravel, &each.Image)
+		if err != nil {
+			fmt.Println(err.Error())
+			return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
+		}
+
+		result = append(result, each)
+	}
+
+	projects := map[string]interface{} {
+		"Projects": result,
+	}
+
 	var tmpl, err = template.ParseFiles("views/index.html")
 
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
-	}
-
-	projects := map[string]interface{} {
-		"Projects": dataProject,
 	}
 
 	return tmpl.Execute(c.Response(), projects)
@@ -129,30 +116,26 @@ func projectDetailPage(c echo.Context) error {
 
 	var ProjectDetail = Project{}
 
-	for i, data := range dataProject {
-		if id == i {
-			ProjectDetail = Project{
-				Title: data.Title,
-				Content: data.Content,
-				StartDate: data.StartDate,
-				EndDate: data.EndDate,
-				Duration: data.Duration,
-				NodeJs: data.NodeJs,
-				React: data.React,
-				Bootstrap: data.Bootstrap,
-				Laravel: data.Laravel,
-			}
-		}
+	err := connection.Conn.QueryRow(context.Background(), "SELECT id, title, description, start_date, end_date, duration, node_js, react, bootstrap, laravel, image FROM tb_project WHERE id=$1", id).Scan(&ProjectDetail.Id, &ProjectDetail.Title, &ProjectDetail.Description, &ProjectDetail.StartDate, &ProjectDetail.EndDate, &ProjectDetail.Duration, &ProjectDetail.NodeJs, &ProjectDetail.React, &ProjectDetail.Bootstrap, &ProjectDetail.Laravel, &ProjectDetail.Image)
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
 	}
+
+	StartTime, _ := time.Parse("2006-01-02", ProjectDetail.StartDate)
+	EndTime, _ := time.Parse("2006-01-02", ProjectDetail.EndDate)
+	ProjectDetail.StartDate = StartTime.Format("2 January 2006")
+	ProjectDetail.EndDate = EndTime.Format("2 January 2006")
+	fmt.Println(ProjectDetail.StartDate, ProjectDetail.EndDate)
 
 	data := map[string]interface{} {
 		"Project": ProjectDetail,
 	}
 
-	var tmpl, err = template.ParseFiles("views/project-detail.html")
+	var tmpl, errTemplate = template.ParseFiles("views/project-detail.html")
 
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
+	if errTemplate != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": errTemplate.Error()})
 	}
 
 	return tmpl.Execute(c.Response(), data)
@@ -163,31 +146,16 @@ func updateProjectPage(c echo.Context) error {
 
 	var ProjectDetail = Project{}
 
-	for i, data := range dataProject {
-		if id == i {
-			ProjectDetail = Project{
-				Id: id,
-				Title: data.Title,
-				Content: data.Content,
-				StartDate: data.StartDate,
-				EndDate: data.EndDate,
-				Duration: data.Duration,
-				NodeJs: data.NodeJs,
-				React: data.React,
-				Bootstrap: data.Bootstrap,
-				Laravel: data.Laravel,
-			}
-		}
-	}
+	err := connection.Conn.QueryRow(context.Background(), "SELECT id, title, description, start_date, end_date, duration, node_js, react, bootstrap, laravel, image FROM tb_project WHERE id=$1", id).Scan(&ProjectDetail.Id, &ProjectDetail.Title, &ProjectDetail.Description, &ProjectDetail.StartDate, &ProjectDetail.EndDate, &ProjectDetail.Duration, &ProjectDetail.NodeJs, &ProjectDetail.React, &ProjectDetail.Bootstrap, &ProjectDetail.Laravel, &ProjectDetail.Image)
 
 	data := map[string]interface{} {
 		"Project": ProjectDetail,
 	}
 
-	var tmpl, err = template.ParseFiles("views/update-project.html")
+	var tmpl, errTemplate = template.ParseFiles("views/update-project.html")
 
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": errTemplate.Error()})
 	}
 
 	return tmpl.Execute(c.Response(), data)
@@ -236,39 +204,23 @@ func calculateDuration(startDate, endDate string) string {
 
 func AddProject(c echo.Context) error {
 	title := c.FormValue("input-project-name")
+	description := c.FormValue("input-deskripsi")
 	startDate := c.FormValue("input-date-start")
 	endDate := c.FormValue("input-date-end")
-	content := c.FormValue("input-deskripsi")
 	duration := calculateDuration(startDate, endDate)
-	nodeJs := c.FormValue("node-js")
-	react := c.FormValue("react")
-	bootstrap := c.FormValue("bootstrap")
-	laravel := c.FormValue("laravel")
+	nodeJs := (c.FormValue("node-js") == "nodeJs")
+	react := (c.FormValue("react") == "react")
+	bootstrap := (c.FormValue("bootstrap") == "bootstrap")
+	laravel := (c.FormValue("laravel") == "laravel")
+	image := c.FormValue("input-image")
 
+	fmt.Println(title, duration, description, nodeJs, react, bootstrap, laravel, image)
 
-	fmt.Println("Title :", title)
-	fmt.Println("Duration :", duration)
-	fmt.Println("Content :", content)
-	fmt.Println(nodeJs)
-	fmt.Println(react)
-	fmt.Println(bootstrap)
-	fmt.Println(laravel)
+	_, err:= connection.Conn.Exec(context.Background(), "INSERT INTO tb_project (title, description, start_date, end_date, duration, node_js, react, bootstrap, laravel, image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)", title, description, startDate, endDate, duration, nodeJs, react, bootstrap, laravel, image)
 
-	var newProject = Project{
-		Title: title,
-		Content: content,
-		StartDate: startDate,
-		EndDate: endDate,
-		Duration: duration,
-		NodeJs: (nodeJs == "nodeJs"),
-		React: (react == "react"),
-		Bootstrap: (bootstrap == "bootstrap"),
-		Laravel: (laravel == "laravel"),
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
 	}
-
-	dataProject = append(dataProject, newProject)
-
-	fmt.Println(dataProject)
 	
 	return c.Redirect(http.StatusMovedPermanently, "/#my-project")
 }
@@ -276,9 +228,13 @@ func AddProject(c echo.Context) error {
 func deleteProject(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	fmt.Println("Index :", id)
+	fmt.Println("Id :", id)
 
-	dataProject = append(dataProject[:id], dataProject[id+1:]...)
+	_, err := connection.Conn.Exec(context.Background(), "DELETE FROM tb_project WHERE id=$1", id)
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
+	}
 
 	return c.Redirect(http.StatusMovedPermanently, "/#my-project")
 }
@@ -286,32 +242,23 @@ func deleteProject(c echo.Context) error {
 func updateProject(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	fmt.Println("Index :", id)
+	fmt.Println("Id :", id)
 
 	title := c.FormValue("input-project-name")
 	startDate := c.FormValue("input-date-start")
 	endDate := c.FormValue("input-date-end")
-	content := c.FormValue("input-deskripsi")
+	description := c.FormValue("input-deskripsi")
 	duration := calculateDuration(startDate, endDate)
-	nodeJs := c.FormValue("node-js")
-	react := c.FormValue("react")
-	bootstrap := c.FormValue("bootstrap")
-	laravel := c.FormValue("laravel")
+	nodeJs := (c.FormValue("node-js") == "nodeJs")
+	react := (c.FormValue("react") == "react")
+	bootstrap := (c.FormValue("bootstrap") == "bootstrap")
+	laravel := (c.FormValue("laravel") == "laravel")
 
+	_, err := connection.Conn.Exec(context.Background(), "UPDATE tb_project SET title=$1, description=$2, start_date=$3, end_date=$4, duration=$5, node_js=$6, react=$7, bootstrap=$8, laravel=$9 WHERE id=$10", title, description, startDate, endDate, duration, nodeJs, react, bootstrap, laravel, id)
 
-	var updateProject = Project{
-		Title: title,
-		Content: content,
-		StartDate: startDate,
-		EndDate: endDate,
-		Duration: duration,
-		NodeJs: (nodeJs == "nodeJs"),
-		React: (react == "react"),
-		Bootstrap: (bootstrap == "bootstrap"),
-		Laravel: (laravel == "laravel"),
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
 	}
-
-	dataProject[id] = updateProject
 
 	return c.Redirect(http.StatusMovedPermanently, "/#my-project")
 }
