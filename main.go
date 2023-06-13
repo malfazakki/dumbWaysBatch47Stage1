@@ -44,6 +44,8 @@ func main() {
 	e.GET("/testimonial", testimonialPage)
 	e.GET("/project-detail/:id", projectDetailPage)
 	e.GET("/update-project/:id", updateProjectPage)
+	e.GET("/login", loginPage)
+	e.GET("/register", registerPage)
 	//post
 	e.POST("/add-project", AddProject)
 	e.POST("/project-delete/:id", deleteProject)
@@ -200,6 +202,26 @@ func calculateDuration(startDate, endDate string) string {
 	}
 
 	return duration
+}
+
+func loginPage(c echo.Context) error {
+	var tmpl, err = template.ParseFiles("views/login.html")
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
+	}
+
+	return tmpl.Execute(c.Response(), nil)
+
+}
+func registerPage(c echo.Context) error {
+	var tmpl, err = template.ParseFiles("views/register.html")
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
+	}
+
+	return tmpl.Execute(c.Response(), nil)
 }
 
 func AddProject(c echo.Context) error {
