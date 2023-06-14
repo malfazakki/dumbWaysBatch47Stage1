@@ -52,6 +52,22 @@
   </nav>
   <!-- nav end -->
 
+  <!-- Login Status -->
+  {{if .FlashMessage}} {{if .FlashStatus}}
+  <div class="container alert alert-success alert-dismissible fade show fixed-top w-50  text-center mx-auto"
+    role="alert" style="top:15vh;">
+    <strong>{{.FlashMessage}}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+  </div>
+  {{else}}
+  <div class="container alert alert-danger alert-dismissible fade show position-fixed-top w-50 text-center mx-auto"
+    role="alert" style="top:15vh;">
+    <strong>{{.FlashMessage}}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+  </div>
+  {{end}} {{end}}
+  <!-- Login Status End -->
+
   <!-- main -->
   <main>
     <!-- Card-Profile -->
@@ -59,20 +75,22 @@
       <section class="card-container row profile-container p-sm-5 px-3 py-5">
         <div class="col-md-8 justify-content-sm-center p-md-5 ps-md-0">
           <!-- judul dan deskripsi -->
-          <h1 class="fw-bold mb-3 text-center text-md-start">Hi! Welcome to my hut.</h1>
-          <p class="justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem mollitia odit
-            sapiente, voluptates, eius aliquam ipsa fugiat dolorem ad reiciendis enim. Accusamus fugit, perferendis,
-            illo maiores consectetur delectus ut quae atque nulla mollitia molestiae asperiores minima! Doloremque
-            iusto consequuntur illum? Provident fugit laudantium ipsum impedit.</p>
+          <h1 class="fw-bold mb-3 text-center text-md-start">Hi! <span class="text-orange">Welcome</span> to my hut.
+          </h1>
+          <p class="justify">Welcome! I am Malfazakki, the host of this Web Profile. This is my first website, it's
+            build with HTML, CSS Native and Bootstrap, Vanilla Javascript, Golang and PostgreSQL. Let me know if there
+            is something that could improve my page or about the thing that could we talk about. You can contact me or
+            follow my
+            Social Media below, send me the advice or any suggestion there. Thanks You!😁</p>
           <!-- contact and download cv -->
           <div class="d-flex justify-content-center justify-content-sm-start align-items-center column-gap-3 mt-4">
             <a href="contact" class="btn btn-primary rounded-15 fw-bold">Contact Me</a>
-            <a href="https://malfazakki.github.io/cv/" class="text-muted fw-bold">Download CV <i
+            <a href="https://malfazakki.github.io/cv/" class="text-muted fw-bold link-nav">Download CV <i
                 class="fa-solid fa-download"></i></a>
           </div>
           <!-- social media -->
           <div class="mt-4 mb-5 d-flex flex-column align-items-center align-items-sm-start">
-            <p class="fw-bold mb-3">Follow Me on Social Media</p>
+            <p class="fw-bold mb-3">Follow Me on <span class="text-orange">Social Media</span></p>
             <div class="tech d-flex gap-3 gap-sm-5">
               <a href="https://www.linkedin.com/in/muhammad-al-fatih-muzakki/" class="icons"><i
                   class="fa-brands fa-linkedin fa-2x"></i></a>
