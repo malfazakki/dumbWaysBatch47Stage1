@@ -80,11 +80,22 @@ func main() {
 }
 
 func homePage(c echo.Context) error {
-	data, _ := connection.Conn.Query(context.Background(), "SELECT tb_project.id, title, description, start_date, end_date, duration, node_js, react, bootstrap, laravel, image, tb_user.name AS author FROM tb_project JOIN tb_user ON tb_project.author_id = tb_user.id  ORDER BY tb_project.id ASC")
 
+	sess, _ := session.Get("session", c)
+	if sess.Values["isLogin"] != true {
+		userData.IsLogin = false
+	} else {
+		userData.IsLogin = sess.Values["isLogin"].(bool)
+		userData.Name = sess.Values["name"].(string)
+	}
+
+	author := sess.Values["id"].(int)
 	var result []Project
 
-	for data.Next() {
+	if author == 0 {
+		data, _ := connection.Conn.Query(context.Background(), "SELECT tb_project.id, title, description, start_date, end_date, duration, node_js, react, bootstrap, laravel, image, tb_user.name AS author FROM tb_project JOIN tb_user ON tb_project.author_id = tb_user.id ORDER BY tb_project.id ASC")
+
+		for data.Next() {
 		var each = Project{}
 
 		err := data.Scan(&each.Id, &each.Title, &each.Description, &each.StartDate, &each.EndDate, &each.Duration, &each.NodeJs, &each.React, &each.Bootstrap, &each.Laravel, &each.Image, &each.Author)
@@ -95,13 +106,20 @@ func homePage(c echo.Context) error {
 
 		result = append(result, each)
 	}
-
-	sess, _ := session.Get("session", c)
-	if sess.Values["isLogin"] != true {
-		userData.IsLogin = false
 	} else {
-		userData.IsLogin = sess.Values["isLogin"].(bool)
-		userData.Name = sess.Values["name"].(string)
+		data, _ := connection.Conn.Query(context.Background(), "SELECT tb_project.id, title, description, start_date, end_date, duration, node_js, react, bootstrap, laravel, image, tb_user.name AS author FROM tb_project JOIN tb_user ON tb_project.author_id = tb_user.id WHERE tb_project.author_id=$1 ORDER BY tb_project.id ASC", author)
+
+		for data.Next() {
+		var each = Project{}
+
+		err := data.Scan(&each.Id, &each.Title, &each.Description, &each.StartDate, &each.EndDate, &each.Duration, &each.NodeJs, &each.React, &each.Bootstrap, &each.Laravel, &each.Image, &each.Author)
+		if err != nil {
+			fmt.Println(err.Error())
+			return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
+		}
+
+		result = append(result, each)
+	}
 	}
 
 	datas := map[string]interface{} {
