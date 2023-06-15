@@ -55,7 +55,7 @@
 
           <h2 class="fw-bold text-center mt-5">Update Project</h2>
 
-          <form action="/update-project/{{.Project.Id}}" method="POST">
+          <form action="/update-project/{{.Project.Id}}" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="id" value="">
             <!-- Project Name -->
             <div class="mb-3">
@@ -131,8 +131,9 @@
 
             <!-- File Upload -->
             <div class="mb-3 mt-3">
-              <label for="exampleFormControlInput1" class="form-label">Upload Image</label>
-              <input type="file" class="form-control" id="exampleFormControlInput1" placeholder="Enter Project Name">
+              <label for="input-image" class="form-label">Upload Image</label>
+              <input type="file" class="form-control" id="input-image" name="input-image" value="{{.Project.Image}}"
+                required>
             </div>
             <!-- File Upload -->
 

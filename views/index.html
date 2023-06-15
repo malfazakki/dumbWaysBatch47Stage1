@@ -29,9 +29,11 @@
           <li class="nav-item">
             <a class="nav-link active fw-bold text-orange" aria-current="page" href="#">Home</a>
           </li>
+          {{if .DataSession.IsLogin}}
           <li class="nav-item">
             <a class="nav-link link-nav" href="add-project">Add Project</a>
           </li>
+          {{end}}
           <li class="nav-item">
             <a class="nav-link link-nav" href="testimonial">Testimonial</a>
           </li>
@@ -133,11 +135,12 @@
           {{range $index, $data := .Projects}}
           <!-- card start -->
           <div class="card col card-project px-0" style="width: 20rem">
-            <img src="public/images/article1.jpg" class="card-img-top" alt="...">
+            <img src="/uploads/{{$data.Image}}" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title mb-1"><a class="link-nav" href="project-detail/{{$data.Id}}">{{$data.Title}}</a>
               </h5>
-              <p class="duration-text mb-2" style="font-size: .9rem;">Project Duration: {{$data.Duration}}
+              <p class="duration-text mb-0" style="font-size: .9rem;">Project Duration: {{$data.Duration}}
+              <p class="duration-text mb-2" style="font-size: .9rem;">Author: {{$data.Author}}
               </p>
               <p class="card-text mb-3 fw-semibold d-flex align-items-center" style="height:50px; overflow:hidden;">
                 {{$data.Description}}</p>
@@ -149,10 +152,10 @@
                 <i class="fa-brands fa-node-js fa-xl"></i>
                 {{end}}
                 {{if $data.React}}
-                <i class="fa-brands fa-bootstrap fa-xl"></i>
+                <i class="fa-brands fa-react fa-xl"></i>
                 {{end}}
                 {{if $data.Bootstrap}}
-                <i class="fa-brands fa-react fa-xl"></i>
+                <i class="fa-brands fa-bootstrap fa-xl"></i>
                 {{end}}
                 {{if $data.Laravel}}
                 <i class="fa-brands fa-laravel fa-xl"></i>
@@ -168,7 +171,7 @@
                   <input type="submit" class="btn btn-outline-danger w-100" value="Delete Post"
                     style="cursor: pointer;">
                 </form>
-                {{end}}
+                {{end}} 
               </div>
               <!-- div button card end -->
             </div>

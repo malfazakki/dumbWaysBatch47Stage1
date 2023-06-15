@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"main/connection"
+	"main/middleware"
 	"net/http"
 	"strconv"
 	"text/template"
@@ -30,6 +31,7 @@ type Project struct {
 	Bootstrap bool
 	Laravel bool
 	Image string
+	Author string
 }
 
 type User struct {
@@ -53,6 +55,7 @@ func main() {
 	e := echo.New()
 
 	e.Static("/public", "public")
+	e.Static("/uploads", "uploads")
 
 	e.Use(session.Middleware(sessions.NewCookieStore([]byte("session"))))
 
@@ -67,9 +70,9 @@ func main() {
 	e.GET("/login", loginPage)
 	e.GET("/register", registerPage)
 	//post
-	e.POST("/add-project", AddProject)
+	e.POST("/add-project", middleware.UploadFile(AddProject))
 	e.POST("/project-delete/:id", deleteProject)
-	e.POST("/update-project/:id", updateProject)
+	e.POST("/update-project/:id", middleware.UploadFile(updateProject))
 	e.POST("/register", register)
 	e.POST("/login", login)
 	e.POST("/logout", logout)
@@ -77,28 +80,19 @@ func main() {
 }
 
 func homePage(c echo.Context) error {
-	data, _ := connection.Conn.Query(context.Background(), "SELECT id, title, description, start_date, end_date, duration, node_js, react, bootstrap, laravel, image FROM tb_project ORDER BY id ASC")
+	data, _ := connection.Conn.Query(context.Background(), "SELECT tb_project.id, title, description, start_date, end_date, duration, node_js, react, bootstrap, laravel, image, tb_user.name AS author FROM tb_project JOIN tb_user ON tb_project.author_id = tb_user.id  ORDER BY tb_project.id ASC")
 
 	var result []Project
-	var isLogin bool
 
 	for data.Next() {
 		var each = Project{}
 
-		err := data.Scan(&each.Id, &each.Title, &each.Description, &each.StartDate, &each.EndDate, &each.Duration, &each.NodeJs, &each.React, &each.Bootstrap, &each.Laravel, &each.Image)
+		err := data.Scan(&each.Id, &each.Title, &each.Description, &each.StartDate, &each.EndDate, &each.Duration, &each.NodeJs, &each.React, &each.Bootstrap, &each.Laravel, &each.Image, &each.Author)
 		if err != nil {
 			fmt.Println(err.Error())
 			return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
 		}
 
-		sess, _ := session.Get("session", c)
-		if sess.Values["isLogin"] != true {
-		userData.IsLogin = false
-		} else {
-		userData.IsLogin = sess.Values["isLogin"].(bool)
-		}
-
-		isLogin = userData.IsLogin
 		result = append(result, each)
 	}
 
@@ -112,10 +106,9 @@ func homePage(c echo.Context) error {
 
 	datas := map[string]interface{} {
 		"Projects": result,
-		"IsLogin": isLogin,
 		"FlashStatus": sess.Values["status"],
 		"FlashMessage": sess.Values["message"],
-		"DataSession": userData,
+		"DataSession": userData, 
 	}
 
 	delete(sess.Values, "message")
@@ -167,7 +160,7 @@ func projectDetailPage(c echo.Context) error {
 
 	var ProjectDetail = Project{}
 
-	err := connection.Conn.QueryRow(context.Background(), "SELECT id, title, description, start_date, end_date, duration, node_js, react, bootstrap, laravel, image FROM tb_project WHERE id=$1", id).Scan(&ProjectDetail.Id, &ProjectDetail.Title, &ProjectDetail.Description, &ProjectDetail.StartDate, &ProjectDetail.EndDate, &ProjectDetail.Duration, &ProjectDetail.NodeJs, &ProjectDetail.React, &ProjectDetail.Bootstrap, &ProjectDetail.Laravel, &ProjectDetail.Image)
+	err := connection.Conn.QueryRow(context.Background(), "SELECT tb_project.id, title, description, start_date, end_date, duration, node_js, react, bootstrap, laravel, image, tb_user.name as author FROM tb_project JOIN tb_user ON tb_project.author_id = tb_user.id WHERE tb_project.id=$1", id).Scan(&ProjectDetail.Id, &ProjectDetail.Title, &ProjectDetail.Description, &ProjectDetail.StartDate, &ProjectDetail.EndDate, &ProjectDetail.Duration, &ProjectDetail.NodeJs, &ProjectDetail.React, &ProjectDetail.Bootstrap, &ProjectDetail.Laravel, &ProjectDetail.Image, &ProjectDetail.Author)
 
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
@@ -177,7 +170,6 @@ func projectDetailPage(c echo.Context) error {
 	EndTime, _ := time.Parse("2006-01-02", ProjectDetail.EndDate)
 	ProjectDetail.StartDate = StartTime.Format("2 January 2006")
 	ProjectDetail.EndDate = EndTime.Format("2 January 2006")
-	fmt.Println(ProjectDetail.StartDate, ProjectDetail.EndDate)
 
 	data := map[string]interface{} {
 		"Project": ProjectDetail,
@@ -292,11 +284,12 @@ func AddProject(c echo.Context) error {
 	react := (c.FormValue("react") == "react")
 	bootstrap := (c.FormValue("bootstrap") == "bootstrap")
 	laravel := (c.FormValue("laravel") == "laravel")
-	image := c.FormValue("input-image")
+	image := c.Get("dataFile").(string)
+	sess, _ := session.Get("session", c)
 
-	fmt.Println(title, duration, description, nodeJs, react, bootstrap, laravel, image)
+	author := sess.Values["id"].(int)
 
-	_, err:= connection.Conn.Exec(context.Background(), "INSERT INTO tb_project (title, description, start_date, end_date, duration, node_js, react, bootstrap, laravel, image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)", title, description, startDate, endDate, duration, nodeJs, react, bootstrap, laravel, image)
+	_, err:= connection.Conn.Exec(context.Background(), "INSERT INTO tb_project (title, description, start_date, end_date, duration, node_js, react, bootstrap, laravel, image, author_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)", title, description, startDate, endDate, duration, nodeJs, react, bootstrap, laravel, image, author)
 
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
@@ -322,8 +315,6 @@ func deleteProject(c echo.Context) error {
 func updateProject(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	fmt.Println("Id :", id)
-
 	title := c.FormValue("input-project-name")
 	startDate := c.FormValue("input-date-start")
 	endDate := c.FormValue("input-date-end")
@@ -333,8 +324,9 @@ func updateProject(c echo.Context) error {
 	react := (c.FormValue("react") == "react")
 	bootstrap := (c.FormValue("bootstrap") == "bootstrap")
 	laravel := (c.FormValue("laravel") == "laravel")
+	image := c.Get("dataFile").(string)
 
-	_, err := connection.Conn.Exec(context.Background(), "UPDATE tb_project SET title=$1, description=$2, start_date=$3, end_date=$4, duration=$5, node_js=$6, react=$7, bootstrap=$8, laravel=$9 WHERE id=$10", title, description, startDate, endDate, duration, nodeJs, react, bootstrap, laravel, id)
+	_, err := connection.Conn.Exec(context.Background(), "UPDATE tb_project SET title=$1, description=$2, start_date=$3, end_date=$4, duration=$5, node_js=$6, react=$7, bootstrap=$8, laravel=$9, image=$10 WHERE id=$11", title, description, startDate, endDate, duration, nodeJs, react, bootstrap, laravel, image, id)
 
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})

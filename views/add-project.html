@@ -55,7 +55,7 @@
 
           <h2 class="fw-bold text-center mt-5">Add New Project</h2>
 
-          <form action="/add-project" method="post">
+          <form action="/add-project" method="post" enctype="multipart/form-data">
             <!-- Project Name -->
             <div class="mb-3">
               <label for="input-project-name" class="form-label">Project Name</label>
@@ -124,7 +124,7 @@
             <!-- File Upload -->
             <div class="mb-3 mt-3">
               <label for="input-image" class="form-label">Upload Image</label>
-              <input type="file" class="form-control" id="input-image" placeholder="Enter Project Name">
+              <input type="file" class="form-control" name="input-image" id="input-image">
             </div>
             <!-- File Upload -->
 
