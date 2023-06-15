@@ -41,7 +41,28 @@
             <a class="nav-link link-nav" href="testimonial">Testimonial</a>
           </li>
         </ul>
-        <a href="#" class="btn btn-primary">Contact Me</a>
+        <ul class="navbar-nav mb-2 mb-lg-0 d-lg-flex justify-content-end align-items-center">
+          {{if .DataSession.IsLogin}}
+          <li class="nav-item">
+            <a class="nav-link link-nav" href="#">Hello, {{.DataSession.Name}}</a>
+          </li>
+          <li class="nav-item">
+            <form id="logout" action="/logout" method="post">
+              <button type="submit" class="nav-link link-nav me-2">Logout</button>
+            </form>
+          </li>
+          {{else}}
+          <li class="nav-item">
+            <a class="nav-link link-nav" href="login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link link-nav me-2" href="register">Register</a>
+          </li>
+          {{end}}
+          <li class="nav-item">
+            <a href="contact" class="btn btn-primary">Contact Me</a>
+          </li>
+        </ul>
       </div>
     </div>
   </nav>

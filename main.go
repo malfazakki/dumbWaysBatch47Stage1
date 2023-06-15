@@ -89,10 +89,10 @@ func homePage(c echo.Context) error {
 		userData.Name = sess.Values["name"].(string)
 	}
 
-	author := sess.Values["id"].(int)
+	author, ok := sess.Values["id"].(int)
 	var result []Project
 
-	if author == 0 {
+	if !ok {
 		data, _ := connection.Conn.Query(context.Background(), "SELECT tb_project.id, title, description, start_date, end_date, duration, node_js, react, bootstrap, laravel, image, tb_user.name AS author FROM tb_project JOIN tb_user ON tb_project.author_id = tb_user.id ORDER BY tb_project.id ASC")
 
 		for data.Next() {
@@ -149,7 +149,24 @@ func contactPage(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
 	}
 
-	return tmpl.Execute(c.Response(), nil)
+	sess, _ := session.Get("session", c)
+
+	if sess.Values["isLogin"] != true {
+		userData.IsLogin = false
+	} else {
+		userData.IsLogin = sess.Values["isLogin"].(bool)
+		userData.Name = sess.Values["name"].(string)
+	}
+
+	session := map[string]interface{}{
+		"DataSession": userData,
+	}
+
+	delete(sess.Values, "message")
+	delete(sess.Values, "status")
+	sess.Save(c.Request(), c.Response())
+
+	return tmpl.Execute(c.Response(), session)
 }
 
 func addProjectPage(c echo.Context) error {
@@ -159,7 +176,24 @@ func addProjectPage(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
 	}
 
-	return tmpl.Execute(c.Response(), nil)
+	sess, _ := session.Get("session", c)
+
+	if sess.Values["isLogin"] != true {
+		userData.IsLogin = false
+	} else {
+		userData.IsLogin = sess.Values["isLogin"].(bool)
+		userData.Name = sess.Values["name"].(string)
+	}
+
+	session := map[string]interface{}{
+		"DataSession": userData,
+	}
+
+	delete(sess.Values, "message")
+	delete(sess.Values, "status")
+	sess.Save(c.Request(), c.Response())
+
+	return tmpl.Execute(c.Response(), session)
 }
 
 func testimonialPage(c echo.Context) error {
@@ -169,8 +203,24 @@ func testimonialPage(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
 	}
 
-	return tmpl.Execute(c.Response(), nil)
+	sess, _ := session.Get("session", c)
 
+	if sess.Values["isLogin"] != true {
+		userData.IsLogin = false
+	} else {
+		userData.IsLogin = sess.Values["isLogin"].(bool)
+		userData.Name = sess.Values["name"].(string)
+	}
+
+	session := map[string]interface{}{
+		"DataSession": userData,
+	}
+
+	delete(sess.Values, "message")
+	delete(sess.Values, "status")
+	sess.Save(c.Request(), c.Response())
+
+	return tmpl.Execute(c.Response(), session)
 }
 
 func projectDetailPage(c echo.Context) error {
@@ -189,8 +239,22 @@ func projectDetailPage(c echo.Context) error {
 	ProjectDetail.StartDate = StartTime.Format("2 January 2006")
 	ProjectDetail.EndDate = EndTime.Format("2 January 2006")
 
+	sess, _ := session.Get("session", c)
+
+	if sess.Values["isLogin"] != true {
+		userData.IsLogin = false
+	} else {
+		userData.IsLogin = sess.Values["isLogin"].(bool)
+		userData.Name = sess.Values["name"].(string)
+	}
+
+	delete(sess.Values, "message")
+	delete(sess.Values, "status")
+	sess.Save(c.Request(), c.Response())
+
 	data := map[string]interface{} {
 		"Project": ProjectDetail,
+		"DataSession": userData,
 	}
 
 	var tmpl, errTemplate = template.ParseFiles("views/project-detail.html")
@@ -209,8 +273,22 @@ func updateProjectPage(c echo.Context) error {
 
 	err := connection.Conn.QueryRow(context.Background(), "SELECT id, title, description, start_date, end_date, duration, node_js, react, bootstrap, laravel, image FROM tb_project WHERE id=$1", id).Scan(&ProjectDetail.Id, &ProjectDetail.Title, &ProjectDetail.Description, &ProjectDetail.StartDate, &ProjectDetail.EndDate, &ProjectDetail.Duration, &ProjectDetail.NodeJs, &ProjectDetail.React, &ProjectDetail.Bootstrap, &ProjectDetail.Laravel, &ProjectDetail.Image)
 
+	sess, _ := session.Get("session", c)
+
+	if sess.Values["isLogin"] != true {
+		userData.IsLogin = false
+	} else {
+		userData.IsLogin = sess.Values["isLogin"].(bool)
+		userData.Name = sess.Values["name"].(string)
+	}
+
+	delete(sess.Values, "message")
+	delete(sess.Values, "status")
+	sess.Save(c.Request(), c.Response())
+
 	data := map[string]interface{} {
 		"Project": ProjectDetail,
+		"DataSession": userData,
 	}
 
 	var tmpl, errTemplate = template.ParseFiles("views/update-project.html")
