@@ -37,12 +37,23 @@
           </li>
         </ul>
         <ul class="navbar-nav mb-2 mb-lg-0 d-lg-flex justify-content-end align-items-center">
+          {{if .DataSession.IsLogin}}
+          <li class="nav-item">
+            <a class="nav-link link-nav" href="#">Hello, {{.DataSession.Name}}</a>
+          </li>
+          <li class="nav-item">
+            <form id="logout" action="/logout" method="post">
+              <button type="submit" class="nav-link link-nav me-2">Logout</button>
+            </form>
+          </li>
+          {{else}}
           <li class="nav-item">
             <a class="nav-link link-nav" href="login">Login</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link link-nav" href="register">Register</a>
+            <a class="nav-link link-nav me-2" href="register">Register</a>
           </li>
+          {{end}}
           <li class="nav-item">
             <a href="contact" class="btn btn-primary">Contact Me</a>
           </li>
@@ -124,12 +135,16 @@
           <div class="card col card-project px-0" style="width: 20rem">
             <img src="public/images/article1.jpg" class="card-img-top" alt="...">
             <div class="card-body">
-              <h5 class="card-title"><a class="link-nav" href="project-detail/{{$data.Id}}">{{$data.Title}}</a></h5>
-              <p class="duration-text">duration: {{$data.Duration}}</p>
-              <p class="card-text mb-3" style="height:50px; overflow:hidden;">{{$data.Description}}</p>
+              <h5 class="card-title mb-1"><a class="link-nav" href="project-detail/{{$data.Id}}">{{$data.Title}}</a>
+              </h5>
+              <p class="duration-text mb-2" style="font-size: .9rem;">Project Duration: {{$data.Duration}}
+              </p>
+              <p class="card-text mb-3 fw-semibold d-flex align-items-center" style="height:50px; overflow:hidden;">
+                {{$data.Description}}</p>
 
               <!-- div tech stack image -->
-              <div class="tech-images mb-4" style="height: 25px;">
+              <div class="tech-images pt-1 mb-4 ms-2 d-flex justify-content-start align-items-center gap-2"
+                style="height: 25px;">
                 {{if $data.NodeJs}}
                 <i class="fa-brands fa-node-js fa-xl"></i>
                 {{end}}
@@ -146,13 +161,14 @@
               <!-- div tech stack image end -->
 
               <!-- div button card -->
-              <div class="button-card d-flex justify-content-between gap-3">
+              <div class="button-card d-flex justify-content-between align-items-center gap-3">
+                {{if $.DataSession.IsLogin}}
                 <a href="update-project/{{$data.Id}}" class="btn btn-primary w-50">Edit</a>
                 <form action="/project-delete/{{$data.Id}}" method="post" class="w-50">
                   <input type="submit" class="btn btn-outline-danger w-100" value="Delete Post"
                     style="cursor: pointer;">
                 </form>
-
+                {{end}}
               </div>
               <!-- div button card end -->
             </div>

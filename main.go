@@ -13,6 +13,7 @@ import (
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type Project struct {
@@ -69,7 +70,9 @@ func main() {
 	e.POST("/add-project", AddProject)
 	e.POST("/project-delete/:id", deleteProject)
 	e.POST("/update-project/:id", updateProject)
+	e.POST("/register", register)
 	e.POST("/login", login)
+	e.POST("/logout", logout)
 	e.Logger.Fatal(e.Start("localhost:5000"))
 }
 
@@ -77,20 +80,30 @@ func homePage(c echo.Context) error {
 	data, _ := connection.Conn.Query(context.Background(), "SELECT id, title, description, start_date, end_date, duration, node_js, react, bootstrap, laravel, image FROM tb_project ORDER BY id ASC")
 
 	var result []Project
+	var isLogin bool
+
 	for data.Next() {
 		var each = Project{}
-		
+
 		err := data.Scan(&each.Id, &each.Title, &each.Description, &each.StartDate, &each.EndDate, &each.Duration, &each.NodeJs, &each.React, &each.Bootstrap, &each.Laravel, &each.Image)
 		if err != nil {
 			fmt.Println(err.Error())
 			return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
 		}
 
+		sess, _ := session.Get("session", c)
+		if sess.Values["isLogin"] != true {
+		userData.IsLogin = false
+		} else {
+		userData.IsLogin = sess.Values["isLogin"].(bool)
+		}
+
+		isLogin = userData.IsLogin
 		result = append(result, each)
 	}
 
 	sess, _ := session.Get("session", c)
-	if sess.Values["isLogin"] == false {
+	if sess.Values["isLogin"] != true {
 		userData.IsLogin = false
 	} else {
 		userData.IsLogin = sess.Values["isLogin"].(bool)
@@ -99,6 +112,7 @@ func homePage(c echo.Context) error {
 
 	datas := map[string]interface{} {
 		"Projects": result,
+		"IsLogin": isLogin,
 		"FlashStatus": sess.Values["status"],
 		"FlashMessage": sess.Values["message"],
 		"DataSession": userData,
@@ -329,19 +343,46 @@ func updateProject(c echo.Context) error {
 	return c.Redirect(http.StatusMovedPermanently, "/#my-project")
 }
 
+func register(c echo.Context) error {
+	err := c.Request().ParseForm()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	name := c.FormValue("input-username")
+	email := c.FormValue("input-user-email")
+	password := c.FormValue("input-user-password")
+
+	passwordHash, _ := bcrypt.GenerateFromPassword([]byte(password), 10)
+
+	_, err = connection.Conn.Exec(context.Background(), "INSERT INTO tb_user(name, email, password) VALUES ($1, $2, $3)", name, email, passwordHash)
+
+	if err != nil {
+		redirectWithMessage(c, "Registration Failed, please try again", false, "/register")
+	}
+
+	return redirectWithMessage(c, "Register Success!", true, "/login")
+}
+
 func login(c echo.Context) error {
 	err := c.Request().ParseForm()
 	if err != nil {
 		log.Fatal(err)
 	}
 	email := c.FormValue("input-user-email")
-	// password := c.FormValue("input-user-password")
+	password := c.FormValue("input-user-password")
 
 	user:= User{}
 	err = connection.Conn.QueryRow(context.Background(), "SELECT * FROM tb_user WHERE email=$1", email).Scan(&user.Id, &user.Name, &user.Email, &user.Password)
-	if err != nil {{
-		return redirectWithMessage(c, "Email not Found!", false, "/loginPage")
-	}}
+	if err != nil {
+		return redirectWithMessage(c, "Email not Found!", false, "/login")
+	}
+
+	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+	if err != nil {
+		return redirectWithMessage(c, "Password Incorrect!", false, "/login")
+	}
 
 	sess, _ := session.Get("session", c)
 	sess.Options.MaxAge = 10800 // 3 jam dalam ms
@@ -351,6 +392,14 @@ func login(c echo.Context) error {
 	sess.Values["email"] = user.Email
 	sess.Values["id"] = user.Id
 	sess.Values["isLogin"] = true
+	sess.Save(c.Request(), c.Response())
+
+	return c.Redirect(http.StatusMovedPermanently, "/")
+}
+
+func logout(c echo.Context) error {
+	sess, _ := session.Get("session", c)
+	sess.Options.MaxAge = -1
 	sess.Save(c.Request(), c.Response())
 
 	return c.Redirect(http.StatusMovedPermanently, "/")
