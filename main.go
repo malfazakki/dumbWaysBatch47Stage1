@@ -180,6 +180,7 @@ func addProjectPage(c echo.Context) error {
 
 	if sess.Values["isLogin"] != true {
 		userData.IsLogin = false
+		return redirectWithMessage(c, "You have to login first", false, "/")
 	} else {
 		userData.IsLogin = sess.Values["isLogin"].(bool)
 		userData.Name = sess.Values["name"].(string)
@@ -396,8 +397,6 @@ func AddProject(c echo.Context) error {
 
 func deleteProject(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
-
-	fmt.Println("Id :", id)
 
 	_, err := connection.Conn.Exec(context.Background(), "DELETE FROM tb_project WHERE id=$1", id)
 
